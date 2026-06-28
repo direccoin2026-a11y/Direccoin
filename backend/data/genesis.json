@@ -1,0 +1,43 @@
+{
+  "bloque": {
+    "version": 1,
+    "indice": 0,
+    "hash": "d16b644c487a59e6d5e9ed1c3f7f58329b840580b612b1a50dcb542150a225a9",
+    "hash_previo": "0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": 1778279888,
+    "timestamp_humano": "2026-05-08 22:38:08 UTC",
+    "dificultad": 1,
+    "nonce": 33,
+    "merkle_raiz": "b5a0258479273a1a1a6cfa4b8370b1a0c26dda8f80d4b5d1646d17287c417eb6",
+    "integridad": "aa24fcd81ca858cf"
+  },
+  "premine": {
+    "suministro_total": 100000000,
+    "premine_total": 3000000,
+    "porcentaje": "3%",
+    "txid": "54665bf00ea669e0b53f91349298e2568823af63fe4c77e77a33016bb55eb864",
+    "salidas": [
+      {
+        "indice": 0,
+        "direccion": "drc7GS3g6B4LVMb7HSmeB4ChbfDPmJB6e1D",
+        "cantidad": 1000000,
+        "tipo": "LIQUIDO_INMEDIATO"
+      },
+      {
+        "indice": 1,
+        "direccion": "drc7GS3g6B4LVMb7HSmeB4ChbfDPmJB6e1D",
+        "cantidad": 2000000,
+        "tipo": "BLOQUEADO_TEMPORAL",
+        "script_bloqueo": {
+          "tipo": "CHECKLOCKTIMEVERIFY",
+          "liberacion": 1809815888
+        }
+      }
+    ],
+    "mensaje": "Direccoin Genesis | Direct Premine | 1% Liq | 2% Bloq | 100000000 DRC"
+  },
+  "direct": {
+    "rol": "direct",
+    "direccion": "drc7GS3g6B4LVMb7HSmeB4ChbfDPmJB6e1D"
+  }
+}

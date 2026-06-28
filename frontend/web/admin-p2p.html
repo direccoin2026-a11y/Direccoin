@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin P2P | Disputas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #FFD700; --red: #ff3b30; --green: #00e676; --bg: #050510; --card: rgba(16, 18, 32, 0.85); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #f0f0ff; min-height: 100vh; padding: 2rem; }
+        h1 { font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, #FFE5A0, #FFD700, #FFA500, #FF6B35); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1.5rem; }
+        .card { background: var(--card); backdrop-filter: blur(20px); border-radius: 20px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(255,215,0,0.08); }
+        .disputa { background: rgba(255,59,48,0.08); border-left: 4px solid var(--red); padding: 1rem; border-radius: 12px; margin-bottom: 0.8rem; }
+        .disputa.resuelta { border-left-color: var(--green); opacity: 0.6; }
+        .btn { padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; border: none; cursor: pointer; font-size: 0.8rem; margin-right: 0.5rem; margin-top: 0.5rem; }
+        .btn-green { background: var(--green); color: #000; }
+        .btn-red { background: var(--red); color: #fff; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
+        .badge-pendiente { background: var(--red); color: #fff; }
+        .badge-resuelta { background: var(--green); color: #000; }
+        .text-muted { color: #8b8f9e; font-size: 0.8rem; }
+        input { width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,215,0,0.2); border-radius: 12px; color: #fff; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <h1>🛡️ Panel Admin - Disputas P2P</h1>
+    
+    <div class="card">
+        <p style="margin-bottom:1rem;"><strong>🔑 Acceso administrador</strong></p>
+        <input type="password" id="adminPass" placeholder="Contraseña">
+        <button class="btn btn-green" onclick="verificar()">Acceder</button>
+        <p class="text-muted" style="margin-top:0.5rem;" id="loginStatus"></p>
+    </div>
+
+    <div id="panelDisputas" style="display:none;"></div>
+
+    <script>
+        const ADMIN_PASS = "DirecCoin2024Admin!";
+        let datos = null;
+
+        async function verificar() {
+            if (document.getElementById("adminPass").value !== ADMIN_PASS) {
+                document.getElementById("loginStatus").innerHTML = "❌ Contraseña incorrecta";
+                return;
+            }
+            document.getElementById("loginStatus").innerHTML = "✅ Acceso concedido";
+            document.getElementById("panelDisputas").style.display = "block";
+            await setTimeout(cargarDisputas, 500);
+        }
+
+        async function cargarDisputas() {
+            try {
+                let r = await fetch("https://direccoin.org/p2p");
+                datos = await r.json();
+                let disputas = datos.disputas || [];
+                let ofertas = datos.ofertas || [];
+                let pendientes = disputas.filter(d => !d.resuelta);
+                let resueltas = disputas.filter(d => d.resuelta);
+                let html = `<h2 style="margin-bottom:1rem;">📋 ${pendientes.length} pendiente(s)</h2>`;
+                
+                for (let d of pendientes) {
+                    let o = ofertas.find(o => o.id === d.ofertaId);
+                    if (!o) continue;
+                    html += `<div class="disputa">
+                        <strong>Oferta #${d.ofertaId}</strong> <span class="badge badge-pendiente">Pendiente</span><br>
+                        <span class="text-muted">Vendedor: ${(o.vendedor||'').substring(0,25)}... | Comprador: ${(o.comprador||'').substring(0,25)}...</span><br>
+                        <span class="text-muted">${o.cantidadDRC} DRC por $${o.precioFiat} | ${o.metodoPago}</span><br>
+                        <span class="text-muted">📞 Contacto: ${o.contacto||'N/A'}</span><br>
+                        <strong>🚩 Motivo:</strong> ${d.motivo}<br>
+                        <strong>Reportado por:</strong> ${(d.reportadoPor||'').substring(0,25)}...<br>
+                        <strong>📎 Comprobante:</strong> ${d.comprobante ? `<a href="${d.comprobante}" target="_blank" style="color:var(--gold);">Ver comprobante</a>` : 'No adjunto'}<br>
+                        <small class="text-muted">${new Date(d.fecha).toLocaleString()}</small><br>
+                        <button class="btn btn-green" onclick="resolver(${d.ofertaId},'vendedor')">💰 Pagar al vendedor</button>
+                        <button class="btn btn-green" onclick="resolver(${d.ofertaId},'comprador')">📤 Devolver al comprador</button>
+                    </div>`;
+                }
+                
+                if (resueltas.length > 0) {
+                    html += `<hr style="border-color:rgba(255,215,0,0.2);margin:1.5rem 0;"><h2 style="margin-bottom:1rem;">✅ ${resueltas.length} resuelta(s)</h2>`;
+                    for (let d of resueltas) {
+                        let o = ofertas.find(o => o.id === d.ofertaId);
+                        html += `<div class="disputa resuelta">
+                            <strong>#${d.ofertaId}</strong> <span class="badge badge-resuelta">Resuelta a favor de: ${d.fallo||'N/A'}</span><br>
+                            <small class="text-muted">${new Date(d.fecha).toLocaleString()}</small>
+                        </div>`;
+                    }
+                }
+                
+                document.getElementById("panelDisputas").innerHTML = html;
+            } catch(e) {
+                document.getElementById("panelDisputas").innerHTML = '<p class="text-muted">Error al cargar</p>';
+            }
+        }
+
+        async function resolver(ofertaId, fallo) {
+            if (!confirm(`¿Resolver a favor del ${fallo}? Esta acción es irreversible.`)) return;
+            let dIdx = datos.disputas.findIndex(d => d.ofertaId === ofertaId);
+            let oIdx = datos.ofertas.findIndex(o => o.id === ofertaId);
+            if (dIdx !== -1) {
+                datos.disputas[dIdx].resuelta = true;
+                datos.disputas[dIdx].fallo = fallo;
+                datos.disputas[dIdx].fechaResuelta = new Date().toISOString();
+            }
+            if (oIdx !== -1) {
+                datos.ofertas[oIdx].estado = "completada";
+                datos.ofertas[oIdx].fallo = fallo;
+            }
+            await fetch("https://direccoin.org/p2p/admin/resolver", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ adminPass: "DirecCoin2024Admin!", ofertaId: ofertaId, fallo: fallo }) }); alert(`✅ Disputa resuelta a favor de: ${fallo}. El admin debe ejecutar la transferencia manualmente desde la wallet.`);
+            setTimeout(cargarDisputas, 500);
+        }
+    </script>
+</body>
+</html>

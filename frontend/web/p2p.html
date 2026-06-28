@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>P2P DirecCoin | Intercambios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root { --gold: #FFD700; --green: #00e676; --red: #ff3b30; --bg: #050510; --card: rgba(16, 18, 32, 0.85); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #f0f0ff; min-height: 100vh; }
+        .universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: radial-gradient(ellipse at 35% 25%, #0d1025 0%, #050510 65%); }
+        .container { max-width: 580px; margin: 0 auto; padding: 1.5rem 1.2rem 3rem; position: relative; z-index: 2; }
+        .header { text-align: center; margin-bottom: 1.5rem; }
+        .header .icon { font-size: 3.5rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .header h1 { font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, #FFE5A0, #FFD700, #FFA500, #FF6B35); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .card { background: var(--card); backdrop-filter: blur(20px); border-radius: 20px; padding: 1.3rem; margin-bottom: 0.9rem; border: 1px solid rgba(255,215,0,0.08); }
+        .card-aviso { border-left: 4px solid var(--gold); background: rgba(255,215,0,0.05); }
+        .btn { display: block; width: 100%; padding: 0.85rem; border-radius: 50px; font-weight: 700; text-align: center; border: none; cursor: pointer; font-size: 0.85rem; margin-top: 0.4rem; }
+        .btn-gold { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
+        .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,215,0,0.3); }
+        .btn-green { background: var(--green); color: #000; font-size: 0.7rem; padding: 0.4rem 1rem; }
+        .btn-red { background: var(--red); color: #fff; font-size: 0.7rem; padding: 0.4rem 1rem; }
+        input, textarea { width: 100%; padding: 0.8rem 1rem; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,215,0,0.18); border-radius: 16px; color: white; font-size: 0.82rem; margin-bottom: 0.5rem; }
+        .oferta-card { background: rgba(255,215,0,0.05); border-radius: 16px; padding: 1rem; margin-bottom: 0.6rem; border: 1px solid rgba(255,215,0,0.1); }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.6rem; font-weight: 700; }
+        .badge-activa { background: var(--green); color: #000; }
+        .badge-proceso { background: var(--gold); color: #000; }
+        .badge-disputa { background: var(--red); color: #fff; }
+        .text-muted { color: #8b8f9e; font-size: 0.7rem; }
+        .text-center { text-align: center; }
+        .status { margin-top: 0.4rem; font-size: 0.7rem; text-align: center; padding: 0.4rem; border-radius: 12px; }
+        .status.ok { background: rgba(0,230,118,0.1); color: var(--green); }
+        .status.error { background: rgba(255,59,48,0.1); color: var(--red); }
+    </style>
+</head>
+<body>
+<div class="universe"></div>
+<div class="container">
+    <div class="header">
+        <div class="icon">💱</div>
+        <h1>P2P DirecCoin</h1>
+        <div class="text-muted">Intercambios Fiat ↔ DRC</div>
+    </div>
+    <div class="card card-aviso">
+        <p class="text-muted"><strong>🛡️ ¿Cómo funciona?</strong><br>1. Publicas oferta de venta.<br>2. Comprador acepta y te paga en fiat.<br>3. Tú confirmas el pago y los DRC se liberan.<br>4. Si hay problema, se abre disputa y el admin revisa.</p>
+    </div>
+    <div class="card">
+        <p class="text-muted"><strong>📊 Mi reputación:</strong> <span id="miReputacion">-</span></p>
+    </div>
+    <div class="card">
+        <p class="text-muted"><strong>📤 Crear oferta</strong></p>
+        <input type="number" id="p2pCantidad" placeholder="Cantidad de DRC" min="1">
+        <input type="number" id="p2pPrecio" placeholder="Precio total en USD" min="0.01" step="0.01">
+        <input type="text" id="p2pMetodo" placeholder="Método de pago">
+        <input type="text" id="p2pContacto" placeholder="Tu Telegram/Email">
+        <button class="btn btn-gold" onclick="crearOferta()">📤 Publicar oferta</button>
+        <div class="status" id="statusCrear"></div>
+    </div>
+    <div class="card">
+        <p class="text-muted"><strong>📋 Ofertas</strong></p>
+        <div id="ofertasContainer">Cargando...</div>
+    </div>
+    <div class="card">
+        <p class="text-muted"><strong>📝 Mis transacciones activas</strong></p>
+        <div id="misTransacciones">Cargando...</div>
+    </div>
+    <button class="btn btn-outline" onclick="window.location.href='index.html'">← Volver a la wallet</button>
+</div>
+<script>
+    let miWallet = "";
+    function getWallet() {
+        let a = localStorage.getItem("direccoin_address");
+        if (a && a.startsWith("drc_")) miWallet = a;
+        else { let s = localStorage.getItem("direccoin_seed"); if (s) miWallet = "drc_" + s.replace(/\s/g,"").substring(0,28).toLowerCase(); }
+    }
+    async function init() {
+        getWallet();
+        try {
+            let r = await fetch("https://direccoin.org/p2p");
+            let d = await r.json();
+            let rep = (d.reputacion||{})[miWallet];
+            document.getElementById("miReputacion").innerHTML = rep ? `✅ Ventas: ${rep.ventas||0} | Compras: ${rep.compras||0} | Disputas: ${rep.disputas||0}` : "🆕 Nuevo";
+            // Ofertas activas
+            let activas = (d.ofertas||[]).filter(o => o.estado === "activa");
+            let div = document.getElementById("ofertasContainer");
+            if (!activas.length) { div.innerHTML = '<p class="text-muted text-center">Sin ofertas.</p>'; }
+            else {
+                div.innerHTML = activas.map(o => `<div class="oferta-card"><strong style="color:var(--gold);">${o.cantidadDRC.toLocaleString()} DRC</strong> por <strong>$${o.precioFiat}</strong><br><span class="text-muted">${(o.vendedor||"").substring(0,20)}... | ${o.metodoPago}</span><br><span class="text-muted">📞 ${o.contacto||"N/A"}</span><br><span class="badge badge-activa">Activa</span> ${o.vendedor !== miWallet ? `<button class="btn btn-green" onclick="comprarOferta(${o.id})">🤝 Comprar</button>` : ""}</div>`).join("");
+            }
+            // Mis transacciones (en proceso o disputa)
+            let mias = (d.ofertas||[]).filter(o => (o.vendedor === miWallet || o.comprador === miWallet) && (o.estado === "en_proceso" || o.estado === "disputa"));
+            let div2 = document.getElementById("misTransacciones");
+            if (!mias.length) { div2.innerHTML = '<p class="text-muted text-center">Sin transacciones activas.</p>'; }
+            else {
+                div2.innerHTML = mias.map(o => {
+                    let soy = o.vendedor === miWallet ? "Vendedor" : "Comprador";
+                    let estadoBadge = o.estado === "en_proceso" ? "badge-proceso" : "badge-disputa";
+                    let estadoTexto = o.estado === "en_proceso" ? "En proceso" : "⚡ Disputa";
+                    let botones = "";
+                    if (o.estado === "en_proceso" && o.vendedor === miWallet) {
+                        botones = `<button class="btn btn-green" onclick="confirmarPago(${o.id})">✅ Confirmar pago</button>`;
+                    }
+                    if (o.estado === "en_proceso") {
+                        botones += `<button class="btn btn-red" onclick="abrirDisputa(${o.id})">🚩 Disputa</button>`;
+                    }
+                    return `<div class="oferta-card"><strong style="color:var(--gold);">${o.cantidadDRC.toLocaleString()} DRC</strong> - $${o.precioFiat}<br><span class="text-muted">${soy} | ${o.metodoPago}</span><br><span class="badge ${estadoBadge}">${estadoTexto}</span><br>${botones}</div>`;
+                }).join("");
+            }
+        } catch(e) { document.getElementById("ofertasContainer").innerHTML = '<p class="text-muted text-center">Error al cargar</p>'; }
+    }
+    async function crearOferta() {
+        let s = document.getElementById("statusCrear");
+        if (!miWallet) { s.innerHTML = "❌ Crea una wallet"; s.className = "status error"; return; }
+        let cantidad = parseInt(document.getElementById("p2pCantidad").value);
+        let precio = parseFloat(document.getElementById("p2pPrecio").value);
+        let metodo = document.getElementById("p2pMetodo").value.trim();
+        let contacto = document.getElementById("p2pContacto").value.trim();
+        if (!cantidad || !precio || !metodo) { s.innerHTML = "❌ Completa los campos"; s.className = "status error"; return; }
+        s.innerHTML = "⏳ Publicando..."; s.className = "status";
+        try {
+            let r = await fetch("https://direccoin.org/p2p/crear", {
+                method: "POST", headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({ vendedor: miWallet, cantidadDRC: cantidad, precioFiat: precio, monedaFiat: "USD", metodoPago: metodo, contacto })
+            });
+            if (r.ok) { s.innerHTML = "✅ Publicada"; s.className = "status ok"; init(); setTimeout(() => { s.innerHTML = ""; s.className = "status"; }, 3000); }
+            else { s.innerHTML = "❌ Error"; s.className = "status error"; }
+        } catch(e) { s.innerHTML = "❌ Error"; s.className = "status error"; }
+    }
+    async function comprarOferta(id) {
+        if (!confirm("¿Aceptas esta oferta? Contacta al vendedor y paga.")) return;
+        await fetch("https://direccoin.org/p2p/comprar", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ ofertaId: id, comprador: miWallet }) });
+        alert("✅ Oferta aceptada. Realiza el pago fiat al vendedor.");
+        init();
+    }
+    async function confirmarPago(id) {
+        if (!confirm("¿Confirmas que recibiste el pago fiat? Los DRC se entregarán al comprador.")) return;
+        await fetch("https://direccoin.org/p2p/confirmar", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ ofertaId: id }) });
+        alert("✅ Pago confirmado. Los DRC fueron entregados.");
+        init();
+    }
+    async function abrirDisputa(id) {
+        let comprobante = prompt("📎 Link del comprobante de pago (opcional):");
+        let motivo = prompt("Motivo de la disputa:");
+        if (!motivo) return;
+        await fetch("https://direccoin.org/p2p/disputa", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ ofertaId: id, motivo: motivo, reportadoPor: miWallet, comprobante: comprobante || "" }) });
+        alert("🚩 Disputa abierta. El administrador revisará el caso.");
+        init();
+    }
+    init();
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whitepaper | DirecCoin (DRC)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --gold: #E8B830; --bg: #0A0D14; --text: #EEF0F6; --muted: #8B8FA8; --green: #4ADE80; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
+.container { max-width:750px; margin:0 auto; padding:1.5rem 1rem 3rem; }
+h1 { font-family:'Space Grotesk',sans-serif; font-size:2.2rem; background:linear-gradient(135deg,#F5D06B,#E8B830,#FF6B4A); -webkit-background-clip:text; background-clip:text; color:transparent; text-align:center; }
+h2 { font-size:1.4rem; color:var(--gold); margin:1.5rem 0 0.5rem; }
+h3 { font-size:1.1rem; color:var(--gold); margin:1rem 0 0.4rem; }
+p { margin-bottom:0.6rem; color:#C5C8D4; font-size:0.9rem; }
+table { width:100%; border-collapse:collapse; margin:1rem 0; }
+th { background:rgba(232,184,48,0.1); color:var(--gold); padding:0.5rem; text-align:left; font-size:0.8rem; }
+td { padding:0.5rem; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.8rem; }
+.badge { padding:3px 10px; border-radius:10px; font-size:0.65rem; font-weight:700; }
+.done { background:var(--green); color:#000; }
+.progress { background:var(--gold); color:#000; }
+.highlight { background:rgba(232,184,48,0.06); padding:1rem; border-radius:12px; border-left:3px solid var(--gold); margin:0.8rem 0; }
+code { background:rgba(255,255,255,0.05); padding:1px 6px; border-radius:4px; font-size:0.8rem; }
+.math { text-align:center; font-family:monospace; padding:0.5rem; background:rgba(0,0,0,0.3); border-radius:8px; margin:0.5rem 0; font-size:0.8rem; }
+.btn { display:inline-block; margin-top:1rem; padding:0.6rem 1.5rem; border:1px solid rgba(232,184,48,0.2); border-radius:30px; color:var(--text); text-decoration:none; font-size:0.8rem; }
+.lang-tabs { text-align:center; margin-bottom:1rem; }
+.lang-tab { padding:0.4rem 1.2rem; border-radius:20px; cursor:pointer; font-size:0.75rem; border:1px solid rgba(232,184,48,0.2); background:transparent; color:var(--muted); margin:0 0.2rem; }
+.lang-tab.active { background:var(--gold); color:#000; }
+.content-en { display:none; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>⚡ DirecCoin Whitepaper v2.1</h1>
+<p style="text-align:center;color:var(--muted);">Blockchain L1 · PoUC · IA · Smart Contracts</p>
+
+<div class="lang-tabs">
+<button class="lang-tab active" onclick="switchLang('es')">🇲🇽 Español</button>
+<button class="lang-tab" onclick="switchLang('en')">🇺🇸 English</button>
+</div>
+
+<div id="content-es">
+
+<h2>1. Resumen</h2>
+<p>DirecCoin (DRC) es una blockchain L1 con <strong>PoUC (Proof of Useful Computation)</strong>: minería que resuelve 5 problemas matemáticos reales simultáneamente. Incluye smart contracts en Python, IA de defensa (A.D.A.), Swap P2P, Lotería y Raspa y Gana.</p>
+
+<h2>2. Tokenomics</h2>
+<table>
+<tr><th>Concepto</th><th>Valor</th></tr>
+<tr><td>Suministro máximo</td><td><strong>50,000,000 DRC</strong></td></tr>
+<tr><td>Premine</td><td>3,000,000 DRC (6%)</td></tr>
+<tr><td>Restante por minar</td><td>47,000,000 DRC (94%)</td></tr>
+<tr><td>Recompensa por bloque</td><td>100 DRC</td></tr>
+<tr><td>Mecanismo deflacionario</td><td>Quema 10-30% en juegos y swap</td></tr>
+<tr><td>Gas inicial</td><td>0.001 DRC (ajustado por IA)</td></tr>
+</table>
+
+<h2>3. Premine (6%)</h2>
+<div class="highlight">
+<p>3,000,000 DRC preminados para desarrollo, liquidez, premios y marketing. Wallet pública: <code>drc_enviopactocunaaurorabaseritm</code></p>
+</div>
+<table>
+<tr><th>Destino</th><th>%</th><th>DRC</th></tr>
+<tr><td>Desarrollo</td><td>20%</td><td>600,000</td></tr>
+<tr><td>Liquidez</td><td>30%</td><td>900,000</td></tr>
+<tr><td>Premios</td><td>25%</td><td>750,000</td></tr>
+<tr><td>Marketing</td><td>15%</td><td>450,000</td></tr>
+<tr><td>Reserva</td><td>10%</td><td>300,000</td></tr>
+</table>
+
+<h2>4. Tecnología</h2>
+
+<h3>4.1 PoUC (Proof of Useful Computation)</h3>
+<p>A diferencia de Bitcoin (PoW) que resuelve acertijos hash sin valor externo, o Ethereum (PoS) que depende de grandes tenencias, <strong>PoUC resuelve 5 problemas matemáticos reales simultáneamente</strong>:</p>
+
+<p><strong>1. Problema de la Mochila (Knapsack) para selección de transacciones:</strong></p>
+<p>Dado un conjunto de <em>n</em> transacciones con tamaños <em>w<sub>i</sub></em> y comisiones <em>v<sub>i</sub></em>, el minero encuentra el subconjunto que maximiza las comisiones sin exceder el tamaño máximo del bloque <em>W</em>:</p>
+<div class="math">max Σ(v<sub>i</sub> · x<sub>i</sub>)  sujeto a  Σ(w<sub>i</sub> · x<sub>i</sub>) ≤ W,  x<sub>i</sub> ∈ {0,1}</div>
+
+<p><strong>2. Verificación batch de firmas ECDSA:</strong></p>
+<p>En lugar de verificar <em>n</em> firmas individualmente, PoUC verifica todas en un solo paso:</p>
+<div class="math">Σ(s<sub>i</sub>⁻¹ · m<sub>i</sub>) · G + Σ(s<sub>i</sub>⁻¹ · r<sub>i</sub>) · K<sub>i</sub> ≡ 0 (mod n)</div>
+
+<p><strong>3. Ordenamiento topológico anti-doble-gasto:</strong></p>
+<p>Construcción de un DAG donde cada transacción es un nodo. Si existe un ciclo → doble gasto detectado → transacción rechazada.</p>
+<div class="math">O(T) = orden_topologico({tx₁, tx₂, ..., txₙ})</div>
+
+<p><strong>4. Ejecución de smart contracts:</strong></p>
+<p>Cada contrato C se ejecuta como una función determinista en Python:</p>
+<div class="math">f<sub>C</sub>(estado<sub>previo</sub>, input) → (estado<sub>nuevo</sub>, output)</div>
+
+<p><strong>5. Balanceo de carga P2P:</strong></p>
+<p>Dado un conjunto de <em>m</em> nodos con capacidades <em>c<sub>j</sub></em>, se distribuyen <em>n</em> transacciones para minimizar la latencia:</p>
+<div class="math">min Σ(latencia<sub>ij</sub> · x<sub>ij</sub>)  sujeto a  Σ(x<sub>ij</sub>) ≤ c<sub>j</sub></div>
+
+<p>En esencia, <strong>cada vatio de electricidad gastado en minería PoUC produce 5 tipos de trabajo útil simultáneamente</strong>.</p>
+
+<h3>4.2 A.D.A. (Autonomous Defense & Acceleration)</h3>
+<div class="highlight">
+<p>🧠 <strong>ADA</strong> es la IA integrada de DirecCoin:</p>
+<p>🛡️ Ciberseguridad · ⚡ Aceleración · 📈 Optimización · 🧠 Aprendizaje · 🔮 Predicción · 💬 Chat bilingüe</p>
+</div>
+
+<h3>4.3 Smart Contracts Nativos (Python)</h3>
+<p>Escrow, staking, subastas. Gas casi gratis. Sin Solidity.</p>
+
+<h2>5. Ecosistema</h2>
+<table>
+<tr><th>Componente</th><th>Descripción</th></tr>
+<tr><td>Wallet</td><td>Crear, minar, enviar/recibir DRC</td></tr>
+<tr><td>Marketplace</td><td>Productos digitales. 2% quema</td></tr>
+<tr><td>Swap P2P</td><td>DRC ↔ Fiat con escrow</td></tr>
+<tr><td>Lotería</td><td>Sorteo semanal. 10% quema</td></tr>
+<tr><td>Raspa y Gana</td><td>Tickets instantáneos. 30% quema</td></tr>
+<tr><td>Smart Contracts</td><td>Escrow, staking, subastas</td></tr>
+<tr><td>ADA Chat</td><td>IA conversacional</td></tr>
+<tr><td>API Pública</td><td>Endpoints REST</td></tr>
+</table>
+
+<h2>6. Roadmap</h2>
+<table>
+<tr><th>Fase</th><th>Objetivo</th><th>Estado</th></tr>
+<tr><td>1</td><td>Wallet, PoUC, Marketplace</td><td><span class="badge done">✓</span></td></tr>
+<tr><td>2</td><td>Smart Contracts, Swap, Lotería</td><td><span class="badge done">✓</span></td></tr>
+<tr><td>3</td><td>ADA IA, Whitepaper, Raspa</td><td><span class="badge done">✓</span></td></tr>
+<tr><td>4</td><td>Red multi-nodo</td><td><span class="badge progress">En progreso</span></td></tr>
+<tr><td>5</td><td>Comunidad, Exchange</td><td>Próximo</td></tr>
+</table>
+</div>
+
+<div id="content-en" class="content-en">
+<h2>1. Summary</h2>
+<p>DirecCoin (DRC) is a Layer 1 blockchain with <strong>PoUC</strong>: mining that solves 5 real mathematical problems simultaneously. Includes Python smart contracts, A.D.A. defense AI, P2P Swap, Lottery and Scratch & Win.</p>
+
+<h2>2. Tokenomics</h2>
+<table>
+<tr><th>Concept</th><th>Value</th></tr>
+<tr><td>Max Supply</td><td><strong>50,000,000 DRC</strong></td></tr>
+<tr><td>Premine</td><td>3,000,000 DRC (6%)</td></tr>
+<tr><td>To mine</td><td>47,000,000 DRC (94%)</td></tr>
+<tr><td>Block Reward</td><td>100 DRC</td></tr>
+<tr><td>Burn</td><td>10-30% in games and swap</td></tr>
+<tr><td>Gas</td><td>0.001 DRC (AI-adjusted)</td></tr>
+</table>
+
+<h2>3. Premine (6%)</h2>
+<div class="highlight">
+<p>3,000,000 DRC for development, liquidity, prizes and marketing. Public wallet: <code>drc_enviopactocunaaurorabaseritm</code></p>
+</div>
+
+<h2>4. Technology</h2>
+
+<h3>4.1 PoUC (Proof of Useful Computation)</h3>
+<p>Unlike Bitcoin (PoW) or Ethereum (PoS), <strong>PoUC solves 5 real mathematical problems simultaneously</strong>:</p>
+
+<p><strong>1. Knapsack Problem for transaction selection:</strong></p>
+<div class="math">max Σ(v<sub>i</sub> · x<sub>i</sub>)  subject to  Σ(w<sub>i</sub> · x<sub>i</sub>) ≤ W,  x<sub>i</sub> ∈ {0,1}</div>
+
+<p><strong>2. Batch ECDSA signature verification:</strong></p>
+<div class="math">Σ(s<sub>i</sub>⁻¹ · m<sub>i</sub>) · G + Σ(s<sub>i</sub>⁻¹ · r<sub>i</sub>) · K<sub>i</sub> ≡ 0 (mod n)</div>
+
+<p><strong>3. Anti-double-spend topological sorting:</strong></p>
+<div class="math">O(T) = topological_order({tx₁, tx₂, ..., txₙ})</div>
+
+<p><strong>4. Smart contract execution:</strong></p>
+<div class="math">f<sub>C</sub>(prev_state, input) → (new_state, output)</div>
+
+<p><strong>5. P2P load balancing:</strong></p>
+<div class="math">min Σ(latency<sub>ij</sub> · x<sub>ij</sub>)  subject to  Σ(x<sub>ij</sub>) ≤ c<sub>j</sub></div>
+
+<p><strong>Every watt of PoUC mining produces 5 types of useful work simultaneously.</strong></p>
+
+<h3>4.2 A.D.A. (Autonomous Defense & Acceleration)</h3>
+<div class="highlight"><p>🧠 Cybersecurity · ⚡ Acceleration · 📈 Optimization · 🧠 Learning · 🔮 Prediction · 💬 Bilingual Chat</p></div>
+
+<h3>4.3 Native Python Smart Contracts</h3>
+<p>Escrow, staking, auctions. Near-zero gas. No Solidity required.</p>
+
+<h2>5. Ecosystem</h2>
+<table>
+<tr><th>Component</th><th>Description</th></tr>
+<tr><td>Wallet</td><td>Create, mine, send/receive DRC</td></tr>
+<tr><td>Marketplace</td><td>Digital products. 2% burn</td></tr>
+<tr><td>Swap P2P</td><td>DRC ↔ Fiat with escrow</td></tr>
+<tr><td>Lottery</td><td>Weekly draw. 10% burn</td></tr>
+<tr><td>Scratch & Win</td><td>Instant tickets. 30% burn</td></tr>
+<tr><td>Smart Contracts</td><td>Escrow, staking, auctions</td></tr>
+<tr><td>ADA Chat</td><td>Conversational AI</td></tr>
+<tr><td>Public API</td><td>REST endpoints</td></tr>
+</table>
+
+<h2>6. Roadmap</h2>
+<table>
+<tr><th>Phase</th><th>Goal</th><th>Status</th></tr>
+<tr><td>1</td><td>Wallet, PoUC, Marketplace</td><td><span class="badge done">✓</span></td></tr>
+<tr><td>2</td><td>Smart Contracts, Swap, Lottery</td><td><span class="badge done">✓</span></td></tr>
+<tr><td>3</td><td>ADA AI, Whitepaper, Scratch</td><td><span class="badge done">✓</span></td></tr>
+<tr><td>4</td><td>Multi-node Network</td><td><span class="badge progress">In Progress</span></td></tr>
+<tr><td>5</td><td>Community, Exchange</td><td>Upcoming</td></tr>
+</table>
+</div>
+
+<a href="index.html" class="btn">← Volver a la wallet</a>
+</div>
+<script>
+function switchLang(lang) {
+    document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('content-es').style.display = lang === 'es' ? 'block' : 'none';
+    document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Raspa y Gana | DirecCoin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #E8B830; --accent: #FF6B4A; --bg: #0A0D14; --card: rgba(18, 21, 32, 0.9); --text: #EEF0F6; --muted: #8B8FA8; --green: #4ADE80; --red: #F87171; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: linear-gradient(170deg, #0A0D14 0%, #151928 40%, #0A0D14 100%); }
+        .container { max-width: 520px; margin: 0 auto; padding: 1.2rem 1rem 2rem; position: relative; z-index: 2; }
+        .header { text-align: center; margin-bottom: 1.5rem; }
+        .header-icon { font-size: 4rem; animation: floatIcon 3s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(232,184,48,0.5)); }
+        @keyframes floatIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 900; background: linear-gradient(135deg, #F5D06B, #E8B830, #FF6B4A); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -2px; }
+        .card { background: var(--card); backdrop-filter: blur(20px); border-radius: 22px; padding: 1.3rem; margin-bottom: 1rem; border: 1px solid rgba(232,184,48,0.08); text-align: center; }
+        .fondo-display { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 900; color: var(--gold); }
+        
+        .ticket-box {
+            width: 300px; height: 180px; margin: 1rem auto; position: relative;
+            border-radius: 16px; overflow: hidden; cursor: pointer;
+            border: 3px solid rgba(232,184,48,0.3); touch-action: none;
+        }
+        .ticket-box canvas { display: block; width: 100%; height: 100%; }
+        .ticket-preview {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-family: 'Space Grotesk', sans-serif; pointer-events: none; z-index: 1;
+            text-align: center;
+        }
+        .ticket-preview .icono { font-size: 3rem; display: block; }
+        .ticket-preview .texto { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.3rem; letter-spacing: 2px; }
+        .ticket-preview.ganador { display: none; }
+        .ticket-preview.ganador .icono { font-size: 2rem; }
+        .ticket-preview.ganador .monto { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 900; color: var(--green); }
+        
+        .btn { display: block; width: 100%; padding: 0.9rem; border-radius: 50px; font-weight: 700; text-align: center; border: none; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; }
+        .btn-gold { background: linear-gradient(135deg, #E8B830, #FF6B4A); color: #FFF; box-shadow: 0 8px 24px rgba(232,184,48,0.3); }
+        .btn-gold:active { transform: scale(0.95); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid rgba(232,184,48,0.2); display: inline-flex; align-items: center; gap: 0.5rem; width: auto; margin-top: 1rem; padding: 0.6rem 1.8rem; }
+        .premios-grid { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 0.8rem 0; }
+        .premio-badge { background: rgba(232,184,48,0.1); border: 1px solid rgba(232,184,48,0.2); border-radius: 14px; padding: 0.4rem 0.6rem; font-size: 0.65rem; font-weight: 700; color: var(--gold); text-align: center; min-width: 50px; }
+        .premio-badge .valor { font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; display: block; }
+        .status { margin-top: 0.5rem; font-size: 0.8rem; padding: 0.5rem; border-radius: 12px; font-weight: 600; }
+        .status.ok { background: rgba(74,222,128,0.12); color: var(--green); }
+        .status.error { background: rgba(248,113,113,0.12); color: var(--red); }
+        .text-muted { color: var(--muted); font-size: 0.7rem; }
+        .text-center { text-align: center; }
+    </style>
+</head>
+<body>
+<div class="universe"></div>
+<div class="container">
+    <div class="header">
+        <div class="header-icon">🎫</div>
+        <h1>Raspa y Gana</h1>
+        <p class="text-muted">Compra · Raspa · Descubre tu premio</p>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--gold);background:rgba(232,184,48,0.03);">
+        <p class="text-muted">🎯 Ticket: <strong style="color:var(--gold);">50 DRC</strong> · 30% se quema · Raspá con el dedo</p>
+    </div>
+
+    <div class="card">
+        <p class="text-muted">💰 FONDO DE PREMIOS</p>
+        <div class="fondo-display" id="fondoRaspa">0 DRC</div>
+        <div class="premios-grid">
+            <div class="premio-badge"><span class="valor">500</span>DRC</div>
+            <div class="premio-badge"><span class="valor">100</span>DRC</div>
+            <div class="premio-badge"><span class="valor">50</span>DRC</div>
+            <div class="premio-badge"><span class="valor">25</span>DRC</div>
+            <div class="premio-badge"><span class="valor">10</span>DRC</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <p class="text-muted" style="margin-bottom:0.5rem;">🎫 TU TICKET</p>
+        <div class="ticket-box" id="ticketBox">
+            <canvas id="raspaCanvas" width="300" height="180"></canvas>
+            <div class="ticket-preview" id="ticketPreview">
+                <span class="icono">🪙</span>
+                <span class="texto">RASPA AQUÍ</span>
+            </div>
+            <div class="ticket-preview ganador" id="ticketGanador">
+                <span class="icono">🎉</span>
+                <span class="monto" id="montoGanado">+0 DRC</span>
+            </div>
+        </div>
+        <button class="btn btn-gold" id="btnComprar" onclick="comprarTicket()">🎫 Comprar ticket · 50 DRC</button>
+        <button class="btn btn-gold" id="btnNuevo" onclick="nuevoTicket()" style="display:none;">🔄 Jugar otra vez · 50 DRC</button>
+        <div class="status" id="status"></div>
+    </div>
+
+    <div class="card">
+        <p class="text-muted">📊 Estadísticas</p>
+        <div style="display:flex;justify-content:space-around;margin-top:0.3rem;">
+            <div><span style="font-weight:700;color:var(--gold);" id="statTickets">0</span><br><span class="text-muted">Vendidos</span></div>
+            <div><span style="font-weight:700;color:var(--green);" id="statPremios">0</span><br><span class="text-muted">Premios</span></div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button class="btn-outline" onclick="window.location.href='plays.html'"><i class="fas fa-arrow-left"></i> Volver a Plays</button>
+    </div>
+</div>
+
+<script>
+    let miWallet = "";
+    let ticketActivo = false;
+    let premioActual = 0;
+    const canvas = document.getElementById("raspaCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function getWallet() {
+        let a = localStorage.getItem("direccoin_address");
+        if (a && a.startsWith("drc_")) miWallet = a;
+        else { let s = localStorage.getItem("direccoin_seed"); if (s) miWallet = "drc_" + s.replace(/\s/g,"").substring(0,28).toLowerCase(); }
+    }
+
+    async function cargarStats() {
+        try {
+            const r = await fetch("/api/v1/raspa/fondo");
+            const d = await r.json();
+            document.getElementById("fondoRaspa").textContent = (d.fondo || 0).toLocaleString() + " DRC";
+            document.getElementById("statTickets").textContent = (d.tickets_vendidos || 0).toLocaleString();
+            document.getElementById("statPremios").textContent = (d.premios_entregados || 0).toLocaleString();
+        } catch(e) {}
+    }
+
+    function dibujarCapaRasca() {
+        // Limpiar todo
+        ctx.clearRect(0, 0, 300, 180);
+        // Fondo metálico
+        ctx.fillStyle = "#6B6F82";
+        ctx.fillRect(0, 0, 300, 180);
+        // Textura
+        for (let i = 0; i < 500; i++) {
+            ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.3})`;
+            ctx.fillRect(Math.floor(Math.random() * 300), Math.floor(Math.random() * 180), Math.floor(Math.random() * 8) + 1, Math.floor(Math.random() * 3) + 1);
+        }
+        // Líneas
+        ctx.strokeStyle = "rgba(255,255,255,0.05)";
+        ctx.lineWidth = 1;
+        for (let i = -180; i < 480; i += 20) {
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + 180, 180); ctx.stroke();
+        }
+        // Texto "RASPA" en grande semitransparente
+        ctx.fillStyle = "rgba(255,255,255,0.1)";
+        ctx.font = "bold 40px Inter";
+        ctx.textAlign = "center";
+        ctx.fillText("RASPA", 150, 105);
+    }
+
+    async function comprarTicket() {
+        const s = document.getElementById("status");
+        if (!miWallet) { s.innerHTML = "❌ Crea una wallet primero"; s.className = "status error"; return; }
+        s.innerHTML = "⏳ Comprando ticket..."; s.className = "status";
+        document.getElementById("btnComprar").disabled = true;
+        try {
+            const r = await fetch("/api/v1/raspa/comprar", {
+                method: "POST", headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({ wallet: miWallet })
+            });
+            const d = await r.json();
+            if (d.exito) {
+                premioActual = d.premio;
+                ticketActivo = true;
+                document.getElementById("btnComprar").style.display = "none";
+                document.getElementById("btnNuevo").style.display = "block";
+                document.getElementById("ticketPreview").style.display = "block";
+                document.getElementById("ticketGanador").style.display = "none";
+                dibujarCapaRasca();
+                s.innerHTML = "✅ ¡Ticket comprado! Raspa con el dedo"; s.className = "status ok";
+                cargarStats();
+                setTimeout(() => s.innerHTML = "", 3000);
+            } else {
+                s.innerHTML = "❌ " + (d.error || "Error"); s.className = "status error";
+                document.getElementById("btnComprar").disabled = false;
+            }
+        } catch(e) { s.innerHTML = "❌ Error de conexión"; s.className = "status error"; document.getElementById("btnComprar").disabled = false; }
+    }
+
+    function nuevoTicket() {
+        ticketActivo = false; premioActual = 0;
+        document.getElementById("btnComprar").style.display = "block";
+        document.getElementById("btnNuevo").style.display = "none";
+        document.getElementById("btnComprar").disabled = false;
+        document.getElementById("ticketPreview").style.display = "block";
+        document.getElementById("ticketGanador").style.display = "none";
+        document.getElementById("status").innerHTML = "";
+        dibujarCapaRasca();
+    }
+
+    function revelarPremio() {
+        document.getElementById("ticketPreview").style.display = "none";
+        if (premioActual > 0) {
+            document.getElementById("montoGanado").textContent = "+" + premioActual + " DRC";
+            document.getElementById("ticketGanador").style.display = "block";
+        } else {
+            document.getElementById("montoGanado").textContent = "Sin premio";
+            document.getElementById("ticketGanador").style.display = "block";
+            document.getElementById("ticketGanador").querySelector(".icono").textContent = "😔";
+        }
+    }
+
+    // Sistema de raspado simple
+    let raspando = false;
+
+    function getXY(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = 300 / rect.width;
+        const scaleY = 180 / rect.height;
+        let clientX, clientY;
+        if (e.touches) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+        return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+        };
+    }
+
+    canvas.addEventListener("touchstart", function(e) {
+        e.preventDefault();
+        if (!ticketActivo) return;
+        raspando = true;
+    }, {passive: false});
+
+    canvas.addEventListener("touchend", function() {
+        raspando = false;
+    });
+
+    canvas.addEventListener("touchmove", function(e) {
+        e.preventDefault();
+        if (!raspando || !ticketActivo) return;
+        const {x, y} = getXY(e);
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.beginPath();
+        ctx.arc(x, y, 25, 0, Math.PI * 2);
+        ctx.fill();
+        verificar();
+    }, {passive: false});
+
+    canvas.addEventListener("mousedown", function() {
+        if (!ticketActivo) return;
+        raspando = true;
+    });
+
+    canvas.addEventListener("mouseup", function() {
+        raspando = false;
+    });
+
+    canvas.addEventListener("mouseleave", function() {
+        raspando = false;
+    });
+
+    canvas.addEventListener("mousemove", function(e) {
+        if (!raspando || !ticketActivo) return;
+        const {x, y} = getXY(e);
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.beginPath();
+        ctx.arc(x, y, 25, 0, Math.PI * 2);
+        ctx.fill();
+        verificar();
+    });
+
+    function verificar() {
+        const imageData = ctx.getImageData(0, 0, 300, 180);
+        let transparentes = 0;
+        for (let i = 3; i < imageData.data.length; i += 4) {
+            if (imageData.data[i] === 0) transparentes++;
+        }
+        if (transparentes > 10000) {
+            ticketActivo = false;
+            revelarPremio();
+        }
+    }
+
+    // Iniciar
+    getWallet();
+    dibujarCapaRasca();
+    cargarStats();
+</script>
+</body>
+</html>

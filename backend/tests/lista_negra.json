@@ -1,0 +1,23 @@
+[
+  {
+    "direccion": "drcBueno",
+    "motivo": "Doble gasto",
+    "timestamp": 1778444643.189092,
+    "duracion": 1440,
+    "intentos": 1
+  },
+  {
+    "direccion": "drcHacker",
+    "motivo": "Ataque detectado",
+    "timestamp": 1778444643.2091243,
+    "duracion": 60,
+    "intentos": 1
+  },
+  {
+    "direccion": "drcSpammer",
+    "motivo": "Rate limit excedido",
+    "timestamp": 1778444643.2113583,
+    "duracion": 10,
+    "intentos": 1
+  }
+]

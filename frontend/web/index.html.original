@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Direccoin Wallet</title>
+<style>
+:root{--c:#F5F0E8;--b:#FFF;--d:#B8860B;--dc:#DAA520;--t:#1A1814;--tc:#6B6355;--v:#2E7D32;--r:#C62828;--e:#E0D8C8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--c);color:var(--t);-webkit-tap-highlight-color:transparent;user-select:none}
+.app{max-width:460px;margin:0 auto;min-height:100vh;background:var(--c);padding-bottom:80px}
+.pantalla{display:none;padding:24px 20px;min-height:100vh;animation:fadeIn .25s ease}
+.pantalla.activa{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.titulo{font-size:26px;font-weight:800;margin-bottom:20px}
+.dorado{color:var(--d)}
+.btn{display:block;width:100%;padding:16px;margin:10px 0;border-radius:14px;font-size:15px;font-weight:700;border:none;cursor:pointer;transition:all .2s;letter-spacing:.3px}
+.btn:active{transform:scale(.97)}
+.btn-d{background:linear-gradient(135deg,var(--dc),var(--d));color:white;box-shadow:0 4px 14px rgba(184,134,11,.25)}
+.btn-o{background:transparent;color:var(--d);border:2px solid var(--d)}
+.btn-g{background:#E8E2D5;color:var(--t)}
+.card{background:var(--b);border-radius:16px;padding:20px;margin:14px 0;border:1px solid var(--e);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.card-d{border:2px solid var(--d);background:linear-gradient(135deg,#FFFDF5,#FFF8E7);border-radius:18px;padding:24px;margin:14px 0;box-shadow:0 4px 20px rgba(184,134,11,.12)}
+.saldo{font-size:36px;font-weight:800;color:var(--v);font-family:'Courier New',monospace;word-break:break-all}
+.input{width:100%;padding:15px;margin:8px 0;border:2px solid var(--e);border-radius:14px;font-size:15px;background:var(--b)}
+.input:focus{outline:none;border-color:var(--d)}
+textarea.input{resize:none;font-family:'Courier New',monospace}
+.frase-box{background:#FFFDF5;border:2px solid var(--dc);border-radius:14px;padding:18px;font-size:16px;font-family:'Courier New',monospace;text-align:center;line-height:1.8;word-spacing:6px}
+.error{color:var(--r);font-size:12px;text-align:center;margin:6px 0;font-weight:600}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;display:flex;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-top:1px solid var(--e);z-index:100}
+.nav-btn{flex:1;padding:10px 4px 12px;text-align:center;font-size:10px;font-weight:600;background:none;border:none;color:#8B7D65;cursor:pointer}
+.nav-btn .ico{font-size:20px;display:block;margin-bottom:2px}
+.nav-btn.activo{color:var(--d);font-weight:700}
+.hero{text-align:center;padding:40px 20px}
+.hero h1{font-size:40px;letter-spacing:3px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feat{background:var(--b);border-radius:14px;padding:18px;text-align:center;border:1px solid var(--e)}
+.feat .ico{font-size:32px;margin-bottom:6px}
+.feat h3{font-size:14px;margin-bottom:4px}
+.feat p{font-size:11px;color:var(--tc)}
+.prog{background:var(--e);height:14px;border-radius:7px;margin:14px 0;overflow:hidden}
+.prog-fill{background:linear-gradient(90deg,var(--dc),var(--d));height:14px;border-radius:7px;width:0%;transition:width 1.5s ease-in-out}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- LANDING -->
+<div id="pantalla-landing" class="pantalla activa">
+<div class="hero"><h1 class="dorado">DIRECCOIN</h1><p style="color:var(--tc);margin-bottom:30px">Blockchain L1 con IA integrada</p></div>
+<div class="grid">
+<div class="feat"><div class="ico">⚡</div><h3>8 segundos</h3><p>por bloque</p></div>
+<div class="feat"><div class="ico">⛏️</div><h3>PoUC</h3><p>Minado útil</p></div>
+<div class="feat"><div class="ico">🤖</div><h3>IA</h3><p>Gas dinámico</p></div>
+<div class="feat"><div class="ico">📱</div><h3>CPU/Teléfono</h3><p>Sin ASICs</p></div>
+</div>
+<div style="margin-top:20px">
+<button class="btn btn-d" onclick="mostrar('bienvenida')">Abrir Wallet</button>
+<button class="btn btn-o" onclick="mostrar('explorador')">Explorador</button>
+</div>
+</div>
+
+<!-- BIENVENIDA -->
+<div id="pantalla-bienvenida" class="pantalla">
+<div style="padding-top:40px;text-align:center">
+<h1 class="dorado" style="font-size:36px">DIRECCOIN</h1>
+<p style="color:var(--tc);margin-bottom:40px">Criptomoneda con IA integrada</p>
+<button class="btn btn-d" onclick="mostrar('crear')">Crear nueva cuenta</button>
+<button class="btn btn-o" onclick="mostrar('ingresar')">Ya tengo frase semilla</button>
+<button class="btn btn-g" onclick="mostrar('landing')">← Volver</button>
+</div>
+</div>
+
+<!-- CREAR -->
+<div id="pantalla-crear" class="pantalla">
+<h2 class="titulo">Tu nueva cuenta</h2>
+<div class="frase-box" id="frase-generada"></div>
+<p class="error">GUARDA ESTAS 12 PALABRAS EN PAPEL</p>
+<label style="display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13px">
+<input type="checkbox" id="check-guardar" onchange="document.getElementById('btn-entrar-crear').disabled=!this.checked" style="width:18px;height:18px">
+Guardé mi frase en un lugar seguro
+</label>
+<button class="btn btn-d" id="btn-entrar-crear" disabled onclick="entrarConFrase(document.getElementById('frase-generada').textContent)">Entrar a Direccoin</button>
+<button class="btn btn-g" onclick="mostrar('bienvenida')">← Volver</button>
+</div>
+
+<!-- INGRESAR -->
+<div id="pantalla-ingresar" class="pantalla">
+<h2 class="titulo">Ingresa tu frase</h2>
+<textarea class="input" id="input-frase" placeholder="12 palabras separadas por espacios..." rows="3"></textarea>
+<p class="error" id="error-frase"></p>
+<button class="btn btn-d" onclick="verificarFrase()">Desbloquear</button>
+<button class="btn btn-g" onclick="mostrar('bienvenida')">← Volver</button>
+</div>
+
+<!-- WALLET -->
+<div id="pantalla-wallet" class="pantalla">
+<h2 class="titulo">Mi Billetera</h2>
+<p style="font-size:11px;color:var(--tc);text-align:center;word-break:break-all" id="dir-actual"></p>
+<div class="card-d">
+<p style="font-size:10px;color:var(--tc);letter-spacing:2px;font-weight:600">SALDO DISPONIBLE</p>
+<p class="saldo" id="saldo-actual">Cargando...</p>
+<p style="font-size:14px;color:var(--tc);margin-top:4px">≈ $0.00 USD</p>
+</div>
+<div style="display:flex;gap:10px">
+<button class="btn btn-d" style="flex:1" onclick="enviarDRC()">Enviar</button>
+<button class="btn btn-o" style="flex:1" onclick="recibirDRC()">Recibir</button>
+</div>
+</div>
+
+<!-- MINERO -->
+<div id="pantalla-minero" class="pantalla">
+<h2 class="titulo">Minero PoUC</h2>
+<div class="card" style="text-align:center">
+<p style="color:var(--v);font-weight:700;font-size:14px">MINERO ACTIVO</p>
+<p style="font-size:13px;color:var(--tc)">Conectado a este nodo</p>
+<div class="prog"><div class="prog-fill" id="barra-minero"></div></div>
+<p style="font-size:12px;color:var(--tc)">Recompensa: 100 DRC por bloque</p>
+</div>
+</div>
+
+<!-- EXPLORADOR -->
+<div id="pantalla-explorador" class="pantalla">
+<h2 class="titulo">Explorador</h2>
+<div class="card" style="text-align:center">
+<p style="font-weight:700;color:var(--d)">Último bloque</p>
+<p style="font-size:32px;font-weight:800" id="altura-explorador">Cargando...</p>
+</div>
+<div class="card" style="text-align:center">
+<p style="font-weight:700;color:var(--d)">Suministro estimado</p>
+<p style="font-size:24px;font-weight:800" id="suministro-explorador">Cargando...</p>
+</div>
+</div>
+
+<!-- IA -->
+<div id="pantalla-ia" class="pantalla">
+<h2 class="titulo">IA Control</h2>
+<div class="card" style="text-align:center">
+<p style="font-size:14px">Gas actual: <strong style="color:var(--d)">~0.000001 DRC</strong></p>
+<p style="font-size:12px;color:var(--v)">Nodo activo 24/7</p>
+</div>
+</div>
+
+<!-- RED -->
+<div id="pantalla-red" class="pantalla">
+<h2 class="titulo">Red P2P</h2>
+<div class="card" style="text-align:center">
+<p style="color:var(--v);font-weight:700;font-size:18px">Conectado</p>
+<p style="font-size:14px;color:var(--tc)">Puerto P2P: 8338 | API: 8339</p>
+</div>
+</div>
+
+<!-- NAV -->
+<div class="nav" id="nav-principal" style="display:none">
+<button class="nav-btn activo" onclick="cambiarPantalla('wallet',this)"><span class="ico">💰</span>Wallet</button>
+<button class="nav-btn" onclick="cambiarPantalla('minero',this)"><span class="ico">⛏️</span>Minero</button>
+<button class="nav-btn" onclick="cambiarPantalla('explorador',this)"><span class="ico">🔍</span>Explorar</button>
+<button class="nav-btn" onclick="cambiarPantalla('ia',this)"><span class="ico">🤖</span>IA</button>
+<button class="nav-btn" onclick="cambiarPantalla('red',this)"><span class="ico">🌐</span>Red</button>
+</div>
+
+</div>
+<script>
+const API="/api/v1";
+const P=["abismo","alba","altar","ancla","arbol","arco","arena","asilo","aurora","avion","bajel","barco","base","beso","borde","bosque","brazo","brillo","brisa","broca","buque","cable","cabra","caja","calma","campo","canto","carta","casa","cauce","cedro","cena","cerco","ciclo","cielo","cima","circo","cisne","clave","cobre","coche","color","coral","costa","crema","cristal","cruce","cuadro","cuarzo","cuerda","cueva","cuna","curso","danza","dedo","delta","denso","diente","disco","doble","duna","ebano","eco","edad","enlace","envio","escama","espiga","esquina","estela","etapa","exodo","fabula","faro","fase","fiesta","figura","firme","flama","flor","foco","forma","fosil","frente","fruto","fuego","fuente","furia","gema","gen","gesto","golpe","gota","grado","grano","grito","halo","haz","hebra","hielo","hilo","himno","hogar","hoja","horca","horno","hueso","idea","iman","indice","isla","jaula","jefe","joya","juego","jugo","junco","labio","lago","lanza","lapiz","largo","lente","letra","lira","lista","llave","lluvia","lomo","luna","luz","madera","marea","marfil","masa","mazo","medalla","mente","mesa","metal","metro","miel","minuto","mision","mitad","modo","moneda","monte","muelle","muro","nacion","nave","neon","nieve","nivel","norte","nota","novia","nube","nudo","obra","oceano","onda","orden","orilla","oro","pacto","padre","pais","palma","pan","papel","parque","paz","pecho","peine","perla","pez","pico","piedra","piso","planeta","plata","pluma","poder","pozo","presion","principe","puente","punto","queso","radio","raiz","rama","red","regalo","reloj","remo","resina","rio","ritmo","roble","rosa","ruta","salto","selva","señal","silla","simbolo","sol","sombra","sueño","surco","tacto","tambor","taza","techo","templo","tesoro","tierra","timon","torre","tramo","tren","tribu","trono","tropa","trueno","union","uva","valle","vaso","velo","viento","vino","vuelo","yema","zafiro","zona","zorro"];
+let fraseActual="",direccionActual="",intervaloMinero=null;
+function generarFrase(){let a=new Uint8Array(16);crypto.getRandomValues(a);let e=BigInt("0x"+Array.from(a).map(b=>b.toString(16).padStart(2,'0')).join('')),p=[];for(let i=0;i<12;i++){let idx=Number((e>>BigInt((11-i)*11))&BigInt(0x7FF));p.push(P[idx%P.length])}return p.join(" ")}
+function mostrar(p){document.querySelectorAll('.pantalla').forEach(e=>e.classList.remove('activa'));document.getElementById('pantalla-'+p).classList.add('activa');let n=document.getElementById('nav-principal');n.style.display=['wallet','minero','explorador','ia','red'].includes(p)?'flex':'none';if(p==='crear'){document.getElementById('frase-generada').textContent=generarFrase();document.getElementById('btn-entrar-crear').disabled=true;document.getElementById('check-guardar').checked=false}if(p==='ingresar'){document.getElementById('error-frase').textContent='';document.getElementById('input-frase').value=''}if(p==='wallet'||p==='explorador')cargarDatos();if(p==='minero')iniciarAnimacion();if(p!=='minero')detenerAnimacion();window.scrollTo(0,0)}
+function verificarFrase(){let f=document.getElementById('input-frase').value.trim(),pa=f.split(/\s+/);if(pa.length===12&&pa.every(p=>P.includes(p))){entrarConFrase(f)}else{document.getElementById('error-frase').textContent='Frase inválida. 12 palabras requeridas.'}}
+function entrarConFrase(f){fraseActual=f;direccionActual="drc"+f.replace(/\s/g,'').substring(0,30);document.getElementById('dir-actual').textContent=direccionActual;mostrar('wallet')}
+function cambiarPantalla(n,b){mostrar(n);document.querySelectorAll('.nav-btn').forEach(e=>e.classList.remove('activo'));b.classList.add('activo')}
+function cargarDatos(){fetch(API+'/estado').then(r=>r.json()).then(d=>{let a=d.altura||0;document.getElementById('saldo-actual').textContent=(a*100).toLocaleString()+' DRC';document.getElementById('altura-explorador').textContent='#'+a.toLocaleString();document.getElementById('suministro-explorador').textContent=((a*100)/1000000).toFixed(1)+'M / 100M DRC'}).catch(()=>{document.getElementById('saldo-actual').textContent='Sin conexión';document.getElementById('altura-explorador').textContent='Sin conexión'})}
+function iniciarAnimacion(){detenerAnimacion();let b=document.getElementById('barra-minero'),p=0;function a(){p+=2;if(p>100)p=0;b.style.width=p+'%'}a();intervaloMinero=setInterval(a,150)}
+function detenerAnimacion(){if(intervaloMinero){clearInterval(intervaloMinero);intervaloMinero=null}}
+function enviarDRC(){let d=prompt("Dirección destino (drc...):");if(!d||!d.startsWith('drc')){alert("Dirección inválida");return}let c=prompt("Cantidad (DRC):");if(!c||isNaN(c)||c<=0){alert("Cantidad inválida");return}alert("✅ Transacción enviada:\n"+c+" DRC → "+d.substring(0,15)+"...")}
+function recibirDRC(){alert("📥 Tu dirección:\n\n"+direccionActual);navigator.clipboard?.writeText(direccionActual)}
+</script>
+</body>
+</html>

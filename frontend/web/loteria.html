@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Plays DirecCoin | Lotería · Juegos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --gold: #E8B830;
+            --gold2: #F5D06B;
+            --accent: #FF6B4A;
+            --bg: #0A0D14;
+            --card: rgba(18, 21, 32, 0.9);
+            --text: #EEF0F6;
+            --muted: #8B8FA8;
+            --green: #4ADE80;
+            --red: #F87171;
+            --radius: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .universe {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            background: linear-gradient(170deg, #0A0D14 0%, #151928 40%, #0A0D14 100%);
+        }
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image:
+                radial-gradient(2px 2px at 10% 15%, rgba(232,184,48,0.5), transparent),
+                radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.35), transparent),
+                radial-gradient(2px 2px at 55% 18%, rgba(255,107,74,0.4), transparent),
+                radial-gradient(1px 1px at 72% 50%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 85% 30%, rgba(232,184,48,0.5), transparent),
+                radial-gradient(1px 1px at 18% 65%, rgba(255,107,74,0.3), transparent),
+                radial-gradient(1.5px 1.5px at 60% 72%, rgba(232,184,48,0.4), transparent),
+                radial-gradient(1px 1px at 92% 80%, rgba(255,255,255,0.25), transparent);
+        }
+        .nebula {
+            position: fixed; top: -25%; right: -20%; width: 80%; height: 90%; z-index: -1;
+            background: radial-gradient(circle, rgba(255,107,74,0.1) 0%, rgba(232,184,48,0.06) 35%, transparent 65%);
+            filter: blur(80px); pointer-events: none;
+            animation: nebulaPulse 6s ease-in-out infinite;
+        }
+        @keyframes nebulaPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .container {
+            max-width: 580px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .header-glow {
+            position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, rgba(232,184,48,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: headerPulse 3s ease-in-out infinite;
+        }
+        @keyframes headerPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
+            50% { transform: translateX(-50%) scale(1.3); opacity: 1; }
+        }
+        .header .icon {
+            font-size: 4rem;
+            position: relative;
+            z-index: 1;
+            animation: iconFloat 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(232,184,48,0.5));
+        }
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #F5D06B, #E8B830, #FF6B4A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
+        }
+        .header .subtitle {
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: var(--card);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(232,184,48,0.08);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::after {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(232,184,48,0.25), transparent);
+        }
+        .card:hover {
+            border-color: rgba(232,184,48,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        .jackpot-card {
+            background: linear-gradient(145deg, #E8B830, #F5D06B, #FF6B4A);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .jackpot-card::before {
+            content: '';
+            position: absolute; top: -60%; left: -60%; width: 220%; height: 220%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 50%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { transform: translate(-40%, -40%) rotate(0deg); }
+            50% { transform: translate(40%, 40%) rotate(180deg); }
+        }
+        .jackpot-card * { position: relative; z-index: 1; }
+        .jackpot-amount {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #0A0D14;
+            letter-spacing: -3px;
+            margin: 0.3rem 0;
+        }
+        .jackpot-label {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            color: #0A0D14;
+            text-transform: uppercase;
+        }
+
+        .grid-numeros {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 6px;
+            margin: 0.8rem 0;
+        }
+        .num-btn {
+            aspect-ratio: 1;
+            border-radius: 14px;
+            border: 2px solid rgba(232,184,48,0.2);
+            background: rgba(0,0,0,0.4);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2,0.9,0.4,1);
+        }
+        .num-btn:hover {
+            border-color: rgba(232,184,48,0.5);
+            background: rgba(232,184,48,0.1);
+        }
+        .num-btn.seleccionado {
+            background: linear-gradient(135deg, #E8B830, #FF6B4A);
+            border-color: #E8B830;
+            color: #0A0D14;
+            font-weight: 900;
+            box-shadow: 0 0 20px rgba(232,184,48,0.4);
+            transform: scale(1.05);
+        }
+        .num-btn:active {
+            transform: scale(0.9);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+            width: 100%;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #E8B830, #FF6B4A);
+            color: #FFF;
+            box-shadow: 0 8px 28px rgba(232,184,48,0.35);
+        }
+        .btn-gold:active { transform: scale(0.95); }
+        .btn-glass {
+            background: rgba(232,184,48,0.08);
+            color: var(--gold);
+            border: 1px solid rgba(232,184,48,0.2);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid rgba(232,184,48,0.2);
+            width: auto;
+            display: inline-flex;
+        }
+
+        .boleto-item {
+            background: rgba(232,184,48,0.06);
+            border-radius: 16px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            border: 1px solid rgba(232,184,48,0.08);
+        }
+        .boleto-numeros {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+        .boleto-estado {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 10px;
+        }
+        .estado-pendiente { background: rgba(232,184,48,0.2); color: var(--gold); }
+        .estado-ganador { background: rgba(74,222,128,0.2); color: var(--green); }
+        .estado-perdedor { background: rgba(248,113,113,0.15); color: var(--red); }
+        .estado-gratis { background: rgba(232,184,48,0.1); color: var(--gold2); }
+
+        .sorteo-result {
+            background: rgba(232,184,48,0.08);
+            border-radius: 18px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid rgba(232,184,48,0.15);
+        }
+        .sorteo-numeros {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .address-badge {
+            background: rgba(0,0,0,0.4);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.65rem;
+            text-align: center;
+            word-break: break-all;
+            border: 1px solid rgba(232,184,48,0.15);
+            color: var(--muted);
+            margin: 0.4rem 0;
+        }
+
+        .status {
+            margin-top: 0.6rem;
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 0.6rem;
+            border-radius: 14px;
+            font-weight: 600;
+        }
+        .status.ok { background: rgba(74,222,128,0.12); color: var(--green); }
+        .status.error { background: rgba(248,113,113,0.12); color: var(--red); }
+        .status.loading { background: rgba(232,184,48,0.12); color: var(--gold); }
+
+        .text-center { text-align: center; }
+        .text-muted { color: var(--muted); font-size: 0.7rem; }
+        .text-small { font-size: 0.7rem; opacity: 0.8; }
+    </style>
+</head>
+<body>
+<div class="universe"></div>
+<div class="stars"></div>
+<div class="nebula"></div>
+
+<div class="container">
+    <div class="header">
+        <div class="header-glow"></div>
+        <div class="icon">🎰</div>
+        <h1>Lotería DirecCoin</h1>
+        <div class="subtitle">Lotería · Quema · Comunidad</div>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--gold);background:rgba(232,184,48,0.04);">
+        <p class="text-small">
+            <strong>🎯 ¿Por qué una lotería?</strong><br>
+            Es una herramienta de <strong style="color:var(--gold);">quema deflacionaria</strong> y <strong style="color:var(--gold);">crecimiento de comunidad</strong>.
+            El 10% se quema. Si nadie gana, el fondo se acumula. Cada 31 de diciembre: quema del bote no ganado.
+        </p>
+    </div>
+
+    <div class="card">
+        <p class="text-small"><i class="fas fa-gift" style="color:var(--gold);"></i> <strong>🎁 Referidos</strong><br>Invita usuarios con tu código. Ambos ganan 1 boleto gratis.</p>
+    </div>
+
+    <div class="jackpot-card">
+        <div class="jackpot-label">🎯 FONDO ACUMULADO</div>
+        <div class="jackpot-amount" id="fondo">0 DRC</div>
+        <div class="jackpot-label">Sorteo: Sábado 8PM · 6 números del 1 al 60</div>
+    </div>
+
+    <div class="card">
+        <p class="text-small"><strong>🏆 Último sorteo</strong></p>
+        <div id="ultimoSorteo" class="text-muted">Cargando...</div>
+    </div>
+
+    <div class="card">
+        <p class="text-small"><strong>🎯 Elige tus 6 números</strong> <span id="contador" style="color:var(--gold);font-weight:700;">(0/6)</span></p>
+        <div class="grid-numeros" id="grid"></div>
+        <button class="btn btn-gold" onclick="comprar()"><i class="fas fa-ticket-alt"></i> Comprar boleto (100 DRC)</button>
+        <div class="status" id="status"></div>
+    </div>
+
+    <div class="card">
+        <p class="text-small"><strong>🎫 Mis boletos</strong></p>
+        <div id="misBoletos" class="text-muted">Cargando...</div>
+    </div>
+
+    <div class="card">
+        <p class="text-small"><strong><i class="fas fa-share-alt"></i> Tu código de referido</strong></p>
+        <div class="address-badge" id="miCodigo">Cargando...</div>
+        <button class="btn btn-glass" onclick="copiarCodigo()"><i class="fas fa-copy"></i> Copiar y compartir</button>
+    </div>
+
+    <div class="text-center" style="margin-top:1.5rem;">
+        <button class="btn btn-outline" onclick="window.location.href="plays.html""><i class="fas fa-arrow-left"></i> Volver a la wallet</button>
+    </div>
+</div>
+
+<script>
+    let numeros = [];
+    let miWallet = "";
+
+    function cargarWallet() {
+        let a = localStorage.getItem("direccoin_address");
+        if (a && a.startsWith("drc_")) miWallet = a;
+        else { let s = localStorage.getItem("direccoin_seed"); if (s) miWallet = "drc_" + s.replace(/\s/g,"").substring(0,28).toLowerCase(); }
+        document.getElementById("miCodigo").textContent = miWallet || "⚠️ Sin wallet";
+    }
+
+    function dibujarGrid() {
+        const g = document.getElementById("grid");
+        g.innerHTML = "";
+        for (let i = 1; i <= 60; i++) {
+            const b = document.createElement("button");
+            b.className = "num-btn" + (numeros.includes(i) ? " seleccionado" : "");
+            b.textContent = i;
+            b.onclick = () => {
+                if (numeros.includes(i)) numeros = numeros.filter(n => n !== i);
+                else if (numeros.length < 6) numeros.push(i);
+                dibujarGrid();
+                document.getElementById("contador").textContent = `(${numeros.length}/6)`;
+            };
+            g.appendChild(b);
+        }
+    }
+
+    async function cargarFondo() {
+        try {
+            const r = await fetch("https://direccoin.org/loteria");
+            const d = await r.json();
+            document.getElementById("fondo").textContent = (d.fondo || 0).toLocaleString() + " DRC";
+        } catch(e) {}
+    }
+
+    async function cargarUltimoSorteo() {
+        try {
+            const r = await fetch("https://direccoin.org/loteria");
+            const d = await r.json();
+            const div = document.getElementById("ultimoSorteo");
+            if (d.historial && d.historial.length > 0) {
+                const u = d.historial[d.historial.length - 1];
+                div.innerHTML = `
+                    <div class="sorteo-result">
+                        <div class="sorteo-numeros">🎯 ${u.numerosGanadores.join(" · ")}</div>
+                        <div class="text-muted" style="margin-top:0.4rem;">💰 Fondo: ${u.fondo.toLocaleString()} DRC</div>
+                        <div style="margin-top:0.3rem;font-weight:700;color:${u.ganador ? 'var(--green)' : 'var(--accent)'};">
+                            ${u.ganador ? "🏆 ¡Tenemos ganador!" : "😞 Sin ganador. Se acumula."}
+                        </div>
+                        <div class="text-muted">🔥 Quemados: ${u.quemado.toLocaleString()} DRC</div>
+                        <div class="text-muted" style="font-size:0.6rem;">${new Date(u.fecha).toLocaleString()}</div>
+                    </div>`;
+            } else {
+                div.innerHTML = '<p class="text-muted text-center">Aún no hay sorteos.</p>';
+            }
+        } catch(e) {}
+    }
+
+    async function cargarMisBoletos() {
+        try {
+            const r = await fetch("https://direccoin.org/loteria");
+            const d = await r.json();
+            const mios = (d.boletos || []).filter(b => b.wallet === miWallet);
+            const div = document.getElementById("misBoletos");
+            if (mios.length === 0) { div.innerHTML = '<p class="text-muted text-center">🎫 Aún no tienes boletos.</p>'; return; }
+            div.innerHTML = mios.map(b => {
+                let icono = b.esGratis ? "🎁" : "💎";
+                let estadoClase = b.sorteado ? (b.gano ? "estado-ganador" : "estado-perdedor") : "estado-pendiente";
+                let estadoTexto = b.sorteado ? (b.gano ? "🏆 Ganador" : "❌ Sin suerte") : "⏳ Pendiente";
+                return `<div class="boleto-item" id="boleto-${b.id}">
+                    <div>
+                        <span style="margin-right:0.5rem;">${icono}</span>
+                        <span class="boleto-numeros">${b.numeros.join(" · ")}</span>
+                    </div>
+                    <span class="boleto-estado ${estadoClase}">${estadoTexto}</span> <button onclick="eliminarBoleto(${b.id})" style="background:transparent;border:none;color:var(--red);cursor:pointer;font-size:1rem;padding:0 0.3rem;" title="Eliminar boleto">✕</button>
+                </div>`;
+            }).join("");
+        } catch(e) {}
+    }
+
+    async function comprar() {
+        const s = document.getElementById("status");
+        if (!miWallet) { s.innerHTML = "❌ Crea una wallet primero"; s.className = "status error"; return; }
+        if (numeros.length !== 6) { s.innerHTML = "❌ Elige 6 números"; s.className = "status error"; return; }
+        s.innerHTML = "⏳ Pagando 100 DRC..."; s.className = "status loading";
+        try {
+            const pago = await fetch("https://direccoin.org/api/v1/enviar", {
+                method: "POST", headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({ origen: miWallet, destino: "drc_loteriafondodireccoin000000", cantidad: 100 })
+            });
+            const pagoData = await pago.json();
+            if (!pagoData.exito) { s.innerHTML = "❌ Saldo insuficiente"; s.className = "status error"; return; }
+            s.innerHTML = "⏳ Registrando boleto...";
+            const r = await fetch("https://direccoin.org/loteria/comprar", {
+                method: "POST", headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({ wallet: miWallet, numeros: numeros, esGratis: false })
+            });
+            const d = await r.json();
+            if (r.ok) {
+                s.innerHTML = "✅ ¡Boleto comprado! Suerte el sábado"; s.className = "status ok";
+                numeros = [];
+                dibujarGrid();
+                document.getElementById("contador").textContent = "(0/6)";
+                cargarFondo(); cargarUltimoSorteo(); cargarMisBoletos();
+                setTimeout(() => { s.innerHTML = ""; s.className = "status"; }, 4000);
+            } else { s.innerHTML = "❌ " + (d.error || "Error"); s.className = "status error"; }
+        } catch(e) { s.innerHTML = "❌ Error de conexión"; s.className = "status error"; }
+    }
+
+    async function eliminarBoleto(id) {
+        if (!confirm("¿Eliminar este boleto para siempre?")) return;
+        try {
+            const r = await fetch("https://direccoin.org/loteria");
+            const d = await r.json();
+            d.boletos = d.boletos.filter(b => b.id !== id);
+            await fetch("https://direccoin.org/loteria/actualizar", {
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify(d)
+            });
+            cargarMisBoletos();
+        } catch(e) { alert("❌ Error al eliminar"); }
+    }
+    function copiarCodigo() {
+        if (!miWallet) return;
+        navigator.clipboard.writeText(miWallet);
+        alert("📋 Código copiado: " + miWallet + "\n\nCompártelo. Por cada nuevo usuario, ambos ganan 1 boleto gratis.");
+    }
+
+    cargarWallet();
+    dibujarGrid();
+    cargarFondo();
+    cargarUltimoSorteo();
+    cargarMisBoletos();
+</script>
+</body>
+</html>

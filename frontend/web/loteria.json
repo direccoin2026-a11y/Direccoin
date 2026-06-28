@@ -1,0 +1,911 @@
+{
+  "fondo": 6200,
+  "boletos": [
+    {
+      "id": 1779825625885,
+      "wallet": "test",
+      "numeros": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-26T20:00:25.885Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1779827673186,
+      "wallet": "drc_brisacasaaguaaurorarayomader",
+      "numeros": [
+        25,
+        10,
+        59,
+        39,
+        24,
+        39
+      ],
+      "esGratis": true,
+      "fecha": "2026-05-26T20:34:33.185Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1779903257887,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        34,
+        38,
+        28,
+        46,
+        52,
+        12
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-27T17:34:17.887Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1779903278284,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        40,
+        48,
+        44,
+        22,
+        7,
+        15
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-27T17:34:38.284Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1779903299679,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        1,
+        33,
+        19,
+        47,
+        59,
+        42
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-27T17:34:59.679Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1779903311012,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        13,
+        16,
+        35,
+        32,
+        28,
+        39
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-27T17:35:11.012Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1779903388312,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        18,
+        13,
+        34,
+        47,
+        60,
+        53
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-27T17:36:28.312Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1779903423191,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        3,
+        8,
+        15,
+        27,
+        46,
+        47
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-27T17:37:03.191Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1779912939576,
+      "wallet": "drc_islaflorlunaoceanobrisavalle",
+      "numeros": [
+        1,
+        15,
+        18,
+        34,
+        55,
+        47
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-27T20:15:39.576Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1779939039239,
+      "wallet": "drc_nubecolinatierraaguacobreoro",
+      "numeros": [
+        60,
+        31,
+        14,
+        26,
+        13,
+        20
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-28T03:30:39.239Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1779939070144,
+      "wallet": "drc_nubecolinatierraaguacobreoro",
+      "numeros": [
+        10,
+        44,
+        52,
+        47,
+        32,
+        40
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-28T03:31:10.144Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 2
+    },
+    {
+      "id": 1779943395844,
+      "wallet": "drc_baselunaabismohojaauroravien",
+      "numeros": [
+        23,
+        14,
+        28,
+        21,
+        4,
+        3
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-28T04:43:15.844Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1779944237026,
+      "wallet": "drc_baselunaabismohojaauroravien",
+      "numeros": [
+        60,
+        42,
+        38,
+        25,
+        16,
+        15
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-28T04:57:17.026Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154505608,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        12,
+        24,
+        19,
+        37,
+        45,
+        16
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:21:45.608Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154511738,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        42,
+        32,
+        25,
+        18,
+        20,
+        4
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:21:51.738Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154520177,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        2,
+        5,
+        8,
+        28,
+        36,
+        43
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:22:00.177Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1780154555516,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        12,
+        8,
+        21,
+        33,
+        47,
+        57
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:22:35.516Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154561462,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        1,
+        12,
+        23,
+        34,
+        45,
+        56
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:22:41.462Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154583580,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        10,
+        19,
+        28,
+        37,
+        46,
+        55
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:23:03.580Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154598299,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        22,
+        13,
+        24,
+        15,
+        26,
+        17
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:23:18.299Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1780154606228,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        22,
+        24,
+        26,
+        37,
+        47,
+        55
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:23:26.228Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1780154612667,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        3,
+        13,
+        23,
+        33,
+        43,
+        53
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:23:32.667Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154620484,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        3,
+        12,
+        23,
+        32,
+        43,
+        52
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:23:40.484Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1780154626060,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        7,
+        18,
+        27,
+        38,
+        47,
+        58
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:23:46.060Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154632932,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        12,
+        7,
+        8,
+        35,
+        9,
+        48
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:23:52.932Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154643564,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        3,
+        14,
+        25,
+        36,
+        47,
+        58
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:24:03.564Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154654980,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        12,
+        34,
+        38,
+        43,
+        46,
+        55
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:24:14.980Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154661305,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:24:21.305Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780154679410,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        11,
+        12,
+        3,
+        7,
+        16,
+        29
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T15:24:39.410Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780155772873,
+      "wallet": "drc_besobajelbrocaaguaplataarbol",
+      "numeros": [
+        30,
+        41,
+        27,
+        1,
+        42,
+        26
+      ],
+      "esGratis": true,
+      "fecha": "2026-05-30T15:42:52.873Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 2
+    },
+    {
+      "id": 1780155772874,
+      "wallet": "drc_bajeloceanobrisariooroislaba",
+      "numeros": [
+        44,
+        47,
+        58,
+        45,
+        31,
+        30
+      ],
+      "esGratis": true,
+      "fecha": "2026-05-30T15:42:52.873Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 2
+    },
+    {
+      "id": 1780159174794,
+      "wallet": "drc_bajeloceanobrisariooroislaba",
+      "numeros": [
+        12,
+        14,
+        33,
+        26,
+        48,
+        29
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T16:39:34.794Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1780159184114,
+      "wallet": "drc_bajeloceanobrisariooroislaba",
+      "numeros": [
+        42,
+        34,
+        26,
+        28,
+        27,
+        22
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T16:39:44.114Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1780159191513,
+      "wallet": "drc_bajeloceanobrisariooroislaba",
+      "numeros": [
+        12,
+        23,
+        32,
+        24,
+        25,
+        26
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T16:39:51.513Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1780159199679,
+      "wallet": "drc_bajeloceanobrisariooroislaba",
+      "numeros": [
+        29,
+        36,
+        15,
+        13,
+        33,
+        41
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T16:39:59.679Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780159206200,
+      "wallet": "drc_bajeloceanobrisariooroislaba",
+      "numeros": [
+        11,
+        35,
+        19,
+        49,
+        52,
+        15
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-30T16:40:06.200Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 1
+    },
+    {
+      "id": 1780189992959,
+      "wallet": "drc_piedranubearenabosquebarcoti",
+      "numeros": [
+        1,
+        3,
+        7,
+        37,
+        33,
+        17
+      ],
+      "esGratis": false,
+      "fecha": "2026-05-31T01:13:12.959Z",
+      "sorteado": true,
+      "gano": false,
+      "aciertos": 0
+    },
+    {
+      "id": 1780290178062,
+      "wallet": "drc_abismohieloavionarcopiedrabo",
+      "numeros": [
+        34,
+        8,
+        12,
+        48,
+        16,
+        30
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-01T05:02:58.062Z"
+    },
+    {
+      "id": 1780290189567,
+      "wallet": "drc_abismohieloavionarcopiedrabo",
+      "numeros": [
+        38,
+        26,
+        9,
+        33,
+        3,
+        7
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-01T05:03:09.567Z"
+    },
+    {
+      "id": 1780290194774,
+      "wallet": "drc_abismohieloavionarcopiedrabo",
+      "numeros": [
+        44,
+        27,
+        25,
+        57,
+        29,
+        32
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-01T05:03:14.774Z"
+    },
+    {
+      "id": 1780290207451,
+      "wallet": "drc_abismohieloavionarcopiedrabo",
+      "numeros": [
+        24,
+        17,
+        33,
+        36,
+        38,
+        19
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-01T05:03:27.451Z"
+    },
+    {
+      "id": 1780331350205,
+      "wallet": "drc_baselunaabismohojaauroravien",
+      "numeros": [
+        12,
+        28,
+        33,
+        47,
+        59,
+        52
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-01T16:29:10.205Z"
+    },
+    {
+      "id": 1780425611697,
+      "wallet": "drc_enviopactocunaaurorabaseritm",
+      "numeros": [
+        22,
+        25,
+        44,
+        14,
+        27,
+        13
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-02T18:40:11.697Z"
+    },
+    {
+      "id": 1780425617933,
+      "wallet": "drc_enviopactocunaaurorabaseritm",
+      "numeros": [
+        35,
+        2,
+        21,
+        42,
+        6,
+        37
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-02T18:40:17.933Z"
+    },
+    {
+      "id": 1780425624406,
+      "wallet": "drc_enviopactocunaaurorabaseritm",
+      "numeros": [
+        33,
+        14,
+        12,
+        32,
+        36,
+        16
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-02T18:40:24.406Z"
+    },
+    {
+      "id": 1780510025648,
+      "wallet": "drc_cielorayofrutobaseestrellapl",
+      "numeros": [
+        29,
+        33,
+        7,
+        46,
+        15,
+        38
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-03T18:07:05.648Z"
+    },
+    {
+      "id": 1780510031240,
+      "wallet": "drc_cielorayofrutobaseestrellapl",
+      "numeros": [
+        10,
+        14,
+        17,
+        57,
+        44,
+        37
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-03T18:07:11.240Z"
+    },
+    {
+      "id": 1780510038420,
+      "wallet": "drc_cielorayofrutobaseestrellapl",
+      "numeros": [
+        48,
+        46,
+        17,
+        35,
+        39,
+        19
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-03T18:07:18.420Z"
+    },
+    {
+      "id": 1780510047116,
+      "wallet": "drc_cielorayofrutobaseestrellapl",
+      "numeros": [
+        28,
+        8,
+        6,
+        26,
+        15,
+        35
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-03T18:07:27.116Z"
+    },
+    {
+      "id": 1782491172102,
+      "wallet": "drc_abismohieloavionarcopiedrabo",
+      "numeros": [
+        36,
+        34,
+        18,
+        49,
+        38,
+        26
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-26T16:26:12.102Z"
+    },
+    {
+      "id": 1782510777229,
+      "wallet": "drc_baselunaabismohojaauroravien",
+      "numeros": [
+        14,
+        23,
+        21,
+        28,
+        16,
+        47
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-26T21:52:57.229Z"
+    },
+    {
+      "id": 1782540381201,
+      "wallet": "drc_aguabasearbolarcobordeviento",
+      "numeros": [
+        15,
+        33,
+        36,
+        17,
+        16,
+        3
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-27T06:06:21.201Z"
+    },
+    {
+      "id": 1782592144556,
+      "wallet": "drc_baselunaabismohojaauroravien",
+      "numeros": [
+        5,
+        27,
+        18,
+        23,
+        21,
+        36
+      ],
+      "esGratis": false,
+      "fecha": "2026-06-27T20:29:04.556Z"
+    }
+  ],
+  "historial": [
+    {
+      "fecha": "2026-06-01T04:39:34.830Z",
+      "numerosGanadores": [
+        3,
+        5,
+        11,
+        38,
+        50,
+        52
+      ],
+      "fondo": 4600,
+      "premio": 4140,
+      "quemado": 460,
+      "ganador": null
+    },
+    {
+      "fecha": "2026-06-01T04:42:09.025Z",
+      "numerosGanadores": [
+        1,
+        11,
+        30,
+        42,
+        48,
+        57
+      ],
+      "fondo": 4600,
+      "premio": 4140,
+      "quemado": 460,
+      "ganador": null
+    },
+    {
+      "fecha": "2026-06-01T04:47:56.203Z",
+      "numerosGanadores": [
+        5,
+        26,
+        30,
+        44,
+        52,
+        59
+      ],
+      "fondo": 4600,
+      "premio6": 3220,
+      "premio5": 690,
+      "premio4": 230,
+      "quemado": 460,
+      "ganador6": null,
+      "ganador5": null,
+      "ganador4": null
+    }
+  ],
+  "ultimoSorteo": "2026-06-01T04:47:56.203Z",
+  "anuncio": "🎰 La lotería es una herramienta de quema deflacionaria y crecimiento de la comunidad DirecCoin. El 10% de cada boleto se quema para siempre. ¡Invita usuarios, gana boletos gratis y haz crecer la red!"
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Swap DirecCoin | Intercambios Seguros</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root { --gold: #E8B830; --accent: #FF6B4A; --bg: #0A0D14; --card: rgba(18, 21, 32, 0.9); --text: #EEF0F6; --muted: #8B8FA8; --green: #4ADE80; --red: #F87171; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: linear-gradient(170deg, #0A0D14 0%, #151928 40%, #0A0D14 100%); }
+        .container { max-width: 580px; margin: 0 auto; padding: 1.5rem 1rem 3rem; position: relative; z-index: 2; }
+        .header { text-align: center; margin-bottom: 1.5rem; }
+        .header .icon { font-size: 4rem; animation: float 3.5s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(232,184,48,0.5)); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 900; background: linear-gradient(135deg, #F5D06B, #E8B830, #FF6B4A); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -2px; }
+        .header .sub { font-size: 0.7rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+        .card { background: var(--card); backdrop-filter: blur(24px); border-radius: 22px; padding: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(232,184,48,0.08); position: relative; overflow: hidden; }
+        .card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(232,184,48,0.25), transparent); }
+        .card-aviso { border-left: 4px solid var(--gold); background: rgba(232,184,48,0.04); }
+        .btn { display: block; width: 100%; padding: 0.9rem; border-radius: 50px; font-weight: 700; text-align: center; border: none; cursor: pointer; font-size: 0.85rem; transition: all 0.3s; margin-top: 0.4rem; }
+        .btn-gold { background: linear-gradient(135deg, #E8B830, #FF6B4A); color: #FFF; box-shadow: 0 8px 24px rgba(232,184,48,0.3); }
+        .btn-gold:active { transform: scale(0.95); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid rgba(232,184,48,0.2); width: auto; display: inline-flex; }
+        input { width: 100%; padding: 0.85rem 1.1rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(232,184,48,0.18); border-radius: 16px; color: white; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 20px rgba(232,184,48,0.15); }
+        .oferta-card { background: rgba(232,184,48,0.05); border-radius: 18px; padding: 1.2rem; margin-bottom: 0.8rem; border: 1px solid rgba(232,184,48,0.1); }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; }
+        .badge-activa { background: var(--green); color: #000; }
+        .badge-proceso { background: var(--gold); color: #000; }
+        .badge-disputa { background: var(--red); color: #fff; }
+        .badge-completada { background: #444; color: #fff; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--muted); font-size: 0.7rem; }
+        .status { margin-top: 0.5rem; font-size: 0.8rem; text-align: center; padding: 0.5rem; border-radius: 12px; }
+        .status.ok { background: rgba(74,222,128,0.1); color: var(--green); }
+        .status.error { background: rgba(248,113,113,0.1); color: var(--red); }
+    </style>
+</head>
+<body>
+<div class="universe"></div>
+<div class="container">
+    <div class="header">
+        <div class="icon">💱</div>
+        <h1>Swap DirecCoin</h1>
+        <div class="sub">DRC bloqueados · 100% seguro</div>
+    </div>
+
+    <div class="card card-aviso">
+        <p class="text-muted"><strong>🛡️ ¿Cómo funciona?</strong><br>1. Publicas oferta y tus DRC se bloquean.<br>2. Un comprador acepta y te paga en fiat.<br>3. Confirmas el pago y los DRC se liberan.<br>4. Si hay problema, abres disputa.</p>
+    </div>
+
+    <div class="card">
+        <p class="text-muted"><strong>📤 Crear oferta de venta</strong></p>
+        <input type="number" id="swapCantidad" placeholder="Cantidad de DRC a vender">
+        <input type="number" id="swapPrecio" placeholder="Precio total en USD">
+        <input type="text" id="swapMetodo" placeholder="Método de pago (PayPal, Transf, etc)">
+        <input type="text" id="swapContacto" placeholder="Tu Telegram/Email">
+        <button class="btn btn-gold" onclick="crearOferta()">🔒 Bloquear DRC y publicar</button>
+        <div class="status" id="statusCrear"></div>
+    </div>
+
+    <div class="card">
+        <p class="text-muted"><strong>📋 Ofertas activas</strong></p>
+        <div id="ofertasContainer">Cargando...</div>
+    </div>
+
+    <div class="card">
+        <p class="text-muted"><strong>📊 Mis transacciones</strong></p>
+        <div id="misTransacciones">Cargando...</div>
+    </div>
+
+    <button class="btn btn-outline" onclick="window.location.href='index.html'">← Volver a la wallet</button>
+</div>
+
+<script>
+    let miWallet = "";
+    function getWallet() {
+        let a = localStorage.getItem("direccoin_address");
+        if (a && a.startsWith("drc_")) miWallet = a;
+        else { let s = localStorage.getItem("direccoin_seed"); if (s) miWallet = "drc_" + s.replace(/\s/g,"").substring(0,28).toLowerCase(); }
+    }
+
+    async function cargarOfertas() {
+        try {
+            const r = await fetch("/api/v1/swap/ofertas");
+            const ofertas = await r.json();
+            const div = document.getElementById("ofertasContainer");
+            const activas = ofertas.filter(o => o.estado === "activa");
+            if (!activas.length) { div.innerHTML = '<p class="text-muted text-center">Sin ofertas activas.</p>'; return; }
+            div.innerHTML = activas.map(o => `
+                <div class="oferta-card">
+                    <strong style="color:var(--gold);">${o.cantidad_drc.toLocaleString()} DRC</strong> por <strong>$${o.precio_fiat} ${o.moneda}</strong><br>
+                    <span class="text-muted">Vendedor: ${(o.vendedor||'').substring(0,20)}... | ${o.metodo}</span><br>
+                    <span class="text-muted">📞 ${o.contacto||'N/A'}</span><br>
+                    <span class="badge badge-activa">🔒 DRC Bloqueados</span>
+                    ${o.vendedor !== miWallet ? `<button class="btn btn-gold" onclick="tomarOferta(${o.id})" style="margin-top:0.5rem;">🤝 Comprar</button>` : `<button class="btn btn-outline" onclick="cancelarOferta(${o.id})" style="margin-top:0.5rem;color:var(--red);">Cancelar</button>`}
+                </div>
+            `).join("");
+
+            // Mis transacciones
+            const mias = ofertas.filter(o => (o.vendedor === miWallet || o.comprador === miWallet) && o.estado !== "activa");
+            const div2 = document.getElementById("misTransacciones");
+            if (!mias.length) { div2.innerHTML = '<p class="text-muted text-center">Sin transacciones activas.</p>'; return; }
+            div2.innerHTML = mias.map(o => {
+                let soy = o.vendedor === miWallet ? "Vendedor" : "Comprador";
+                let badge = o.estado === "en_proceso" ? "badge-proceso" : o.estado === "disputa" ? "badge-disputa" : "badge-completada";
+                let estado = o.estado === "en_proceso" ? "En proceso" : o.estado === "disputa" ? "⚡ Disputa" : "Completada";
+                let botones = "";
+                if (o.estado === "en_proceso" && o.vendedor === miWallet) botones += `<button class="btn btn-gold" onclick="confirmarPago(${o.id})" style="font-size:0.7rem;">✅ Confirmar pago</button>`;
+                if (o.estado === "en_proceso") botones += `<button class="btn btn-outline" onclick="abrirDisputa(${o.id})" style="font-size:0.7rem;color:var(--red);">🚩 Disputa</button>`;
+                return `<div class="oferta-card"><strong>${o.cantidad_drc.toLocaleString()} DRC</strong> - $${o.precio_fiat}<br><span class="text-muted">${soy} | ${o.metodo}</span><br><span class="badge ${badge}">${estado}</span><br>${botones}</div>`;
+            }).join("");
+        } catch(e) {}
+    }
+
+    async function crearOferta() {
+        const s = document.getElementById("statusCrear");
+        if (!miWallet) { s.innerHTML = "❌ Crea una wallet"; s.className = "status error"; return; }
+        const cantidad = parseInt(document.getElementById("swapCantidad").value);
+        const precio = parseFloat(document.getElementById("swapPrecio").value);
+        const metodo = document.getElementById("swapMetodo").value.trim();
+        const contacto = document.getElementById("swapContacto").value.trim();
+        if (!cantidad || !precio || !metodo) { s.innerHTML = "❌ Completa los campos"; s.className = "status error"; return; }
+        s.innerHTML = "⏳ Bloqueando DRC..."; s.className = "status";
+        try {
+            const r = await fetch("/api/v1/swap/crear", {
+                method: "POST", headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({ vendedor: miWallet, cantidad_drc: cantidad, precio_fiat: precio, moneda: "USD", metodo, contacto })
+            });
+            const d = await r.json();
+            if (d.exito) {
+                s.innerHTML = "✅ DRC bloqueados. Oferta publicada."; s.className = "status ok";
+                document.getElementById("swapCantidad").value = ""; document.getElementById("swapPrecio").value = "";
+                document.getElementById("swapMetodo").value = ""; document.getElementById("swapContacto").value = "";
+                cargarOfertas(); setTimeout(() => { s.innerHTML = ""; s.className = "status"; }, 3000);
+            } else { s.innerHTML = "❌ " + (d.error || "Error"); s.className = "status error"; }
+        } catch(e) { s.innerHTML = "❌ Error"; s.className = "status error"; }
+    }
+
+    async function tomarOferta(id) {
+        if (!confirm("¿Aceptas esta oferta? Debes pagar en fiat al vendedor.")) return;
+        await fetch("/api/v1/swap/tomar", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ comprador: miWallet, oferta_id: id }) });
+        alert("✅ Oferta aceptada. Realiza el pago fiat.");
+        cargarOfertas();
+    }
+
+    async function confirmarPago(id) {
+        if (!confirm("¿Confirmas que recibiste el pago fiat?")) return;
+        await fetch("/api/v1/swap/confirmar", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ oferta_id: id }) });
+        alert("✅ Pago confirmado. DRC transferidos.");
+        cargarOfertas();
+    }
+
+    async function cancelarOferta(id) {
+        if (!confirm("¿Cancelar? Tus DRC serán devueltos.")) return;
+        await fetch("/api/v1/swap/cancelar", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ oferta_id: id }) });
+        alert("✅ Oferta cancelada. DRC devueltos.");
+        cargarOfertas();
+    }
+
+    async function abrirDisputa(id) {
+        const motivo = prompt("Motivo de la disputa:");
+        if (!motivo) return;
+        await fetch("/api/v1/swap/disputa", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ oferta_id: id, motivo }) });
+        alert("🚩 Disputa abierta. El admin revisará.");
+        cargarOfertas();
+    }
+
+    getWallet();
+    cargarOfertas();
+</script>
+</body>
+</html>

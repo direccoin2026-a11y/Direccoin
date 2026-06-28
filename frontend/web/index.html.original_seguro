@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="description" content="Direccoin - Blockchain de Próxima Generación con IA Integrada. PoUC (Proof of Useful Computation), gas dinámico, transacciones instantáneas.">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Direccoin | Blockchain con IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(ellipse at 20% 30%, #0f0f1a, #0a0a0f);
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Variables de diseño */
+        :root {
+            --primary-gold: #FFD700;
+            --primary-gold-dark: #DAA520;
+            --primary-glow: rgba(255, 215, 0, 0.25);
+            --bg-card: rgba(20, 20, 35, 0.7);
+            --bg-card-solid: #141423;
+            --border-glow: 1px solid rgba(255, 215, 0, 0.2);
+            --shadow-gold: 0 4px 20px rgba(255, 215, 0, 0.1);
+            --success: #00c853;
+            --error: #ff3b30;
+            --warning: #ff9500;
+            --text-secondary: #a0a0b0;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 20px 16px 90px 16px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 8px 0;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+
+        /* Tarjetas */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 16px;
+            border: var(--border-glow);
+            box-shadow: var(--shadow-gold);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.15);
+        }
+
+        .card-gold {
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark));
+            color: #1a1a2e;
+            border: none;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .card-gold .text-small,
+        .card-gold .text-secondary {
+            color: #1a1a2e;
+            opacity: 0.8;
+        }
+
+        /* Tipografía */
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .saldo-principal {
+            font-size: 56px;
+            font-weight: 800;
+            text-align: center;
+            font-family: 'Inter', monospace;
+            letter-spacing: -1px;
+        }
+
+        .text-small {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-2 {
+            margin-top: 8px;
+        }
+
+        .mt-3 {
+            margin-top: 16px;
+        }
+
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        /* Botones */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark));
+            color: #0a0a0f;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 6px rgba(255, 215, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.97);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-gold);
+            border: 1px solid var(--primary-gold);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Estados de conexión */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff3b30;
+            box-shadow: 0 0 4px #ff3b30;
+        }
+
+        .dot.on {
+            background: #00c853;
+            box-shadow: 0 0 6px #00c853;
+        }
+
+        /* Barra de progreso */
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: 10px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary-gold), var(--primary-gold-dark));
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.1s linear;
+        }
+
+        /* Frase semilla */
+        .seed-phrase {
+            background: #0a0a0f;
+            border-radius: 20px;
+            padding: 20px;
+            font-family: 'Courier New', 'SF Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: center;
+            border: 1px solid var(--primary-gold);
+            word-break: break-word;
+            margin: 16px 0;
+        }
+
+        /* Inputs */
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            color: white;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            margin: 8px 0;
+            transition: border 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+        }
+
+        textarea.input-field {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Checkbox */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 16px 0;
+            cursor: pointer;
+        }
+
+        .checkbox-container input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary-gold);
+        }
+
+        /* Dirección */
+        .address-box {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-family: monospace;
+            word-break: break-all;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* Mensajes */
+        .message {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .message-success {
+            color: var(--success);
+        }
+
+        .message-error {
+            color: var(--error);
+        }
+
+        /* Navegación */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 520px;
+            margin: 0 auto;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 16px 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 10px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: all 0.2s;
+        }
+
+        .nav-item.active {
+            color: var(--primary-gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 22px;
+        }
+
+        /* Pantallas */
+        .screen {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Utilidades */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">DIRECCOIN</div>
+        <div class="tagline">Blockchain L1 · IA Integrada · PoUC</div>
+    </div>
+
+    <!-- Pantalla de bienvenida -->
+    <div id="screen-landing" class="screen active">
+        <div class="card">
+            <p style="margin-bottom: 12px;">La nueva era de la blockchain</p>
+            <div class="status-badge" style="margin-top: 8px; justify-content: center;">
+                <span class="dot" id="landing-dot"></span>
+                <span id="landing-status">Conectando a la red...</span>
+            </div>
+        </div>
+        <button class="btn btn-primary" onclick="navigateTo('welcome')">💼 Abrir Wallet</button>
+        <button class="btn btn-secondary" onclick="navigateTo('explorer')">🔍 Explorador</button>
+    </div>
+
+    <!-- Selección: crear / importar -->
+    <div id="screen-welcome" class="screen">
+        <div class="card" style="text-align: center;">
+            <p>Accede a tu wallet descentralizada</p>
+        </div>
+        <button class="btn btn-primary" onclick="navigateTo('create')">🆕 Crear nueva cuenta</button>
+        <button class="btn btn-secondary" onclick="navigateTo('import')">🔑 Importar frase semilla</button>
+        <button class="btn btn-outline" onclick="navigateTo('landing')">← Volver al inicio</button>
+    </div>
+
+    <!-- Crear cuenta -->
+    <div id="screen-create" class="screen">
+        <h2 class="text-center">✨ Tu frase semilla</h2>
+        <div class="seed-phrase" id="seed-phrase-display"></div>
+        <p class="text-small text-center" style="color: var(--warning); margin-top: 8px;">
+            ⚠️ Guarda estas 12 palabras. Sin ellas perderás tu cuenta para siempre.
+        </p>
+        <div class="checkbox-container">
+            <input type="checkbox" id="seed-confirm" onchange="toggleCreateButton()">
+            <span class="text-small">✅ He guardado mi frase en un lugar seguro</span>
+        </div>
+        <button class="btn btn-primary" id="create-account-btn" disabled onclick="createAccount()">🚀 Crear y Entrar</button>
+        <button class="btn btn-outline" onclick="navigateTo('welcome')">← Volver</button>
+    </div>
+
+    <!-- Importar cuenta -->
+    <div id="screen-import" class="screen">
+        <h2 class="text-center">🔐 Ingresa tu frase semilla</h2>
+        <textarea class="input-field" id="import-seed" rows="3" placeholder="12 palabras separadas por espacios..."></textarea>
+        <div class="message message-error" id="import-error"></div>
+        <button class="btn btn-primary" onclick="importAccount()">🔓 Desbloquear wallet</button>
+        <button class="btn btn-outline" onclick="navigateTo('welcome')">← Volver</button>
+    </div>
+
+    <!-- Wallet principal -->
+    <div id="screen-wallet" class="screen">
+        <div class="card-gold" style="border-radius: 32px;">
+            <div class="text-small text-center" style="letter-spacing: 1.5px;">SALDO DISPONIBLE</div>
+            <div class="saldo-principal" id="wallet-balance">0</div>
+            <div class="text-small text-center">DRC</div>
+        </div>
+        <div class="grid-2" style="margin-top: 16px;">
+            <button class="btn btn-primary" onclick="sendTransaction()">📤 Enviar</button>
+            <button class="btn btn-secondary" onclick="copyAddress()">📥 Recibir</button>
+        </div>
+        <div class="address-box mt-2" id="wallet-address">Cargando dirección...</div>
+        <div class="status-badge mt-2" style="justify-content: center;">
+            <span class="dot" id="wallet-dot"></span>
+            <span id="wallet-status">Conectando...</span>
+        </div>
+    </div>
+
+    <!-- Minero -->
+    <div id="screen-miner" class="screen">
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 56px; margin-bottom: 8px;">⛏️</div>
+            <h2>Minero PoUC</h2>
+            <p class="text-small">Recompensa por bloque: <strong style="color: var(--primary-gold);">100 DRC</strong></p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="miner-progress"></div>
+            </div>
+            <button class="btn btn-primary" id="mine-btn" onclick="startMining()">💎 Minar ahora</button>
+            <div id="mine-message" class="message mt-2"></div>
+        </div>
+        <div class="card" style="text-align: center;">
+            <div class="text-small">Última recompensa</div>
+            <div id="last-reward" style="font-size: 28px; font-weight: bold; color: var(--primary-gold);">---</div>
+        </div>
+    </div>
+
+    <!-- Explorador -->
+    <div id="screen-explorer" class="screen">
+        <div class="card" style="text-align: center;">
+            <div class="text-small">📊 ALTURA DE LA RED</div>
+            <div class="saldo-principal" id="explorer-height" style="font-size: 40px;">0</div>
+        </div>
+        <div class="card" style="text-align: center;">
+            <div class="text-small">⛽ GAS ACTUAL</div>
+            <div class="saldo-principal" id="explorer-gas" style="font-size: 28px;">0</div>
+            <div class="text-small">DRC</div>
+        </div>
+        <div class="card" style="text-align: center;">
+            <div class="text-small">🌐 NODOS ACTIVOS</div>
+            <div id="explorer-nodes" style="font-size: 28px; font-weight: bold;">1</div>
+        </div>
+        <button class="btn btn-outline" onclick="navigateTo('landing')">← Volver al inicio</button>
+    </div>
+
+    <!-- IA Control -->
+    <div id="screen-ai" class="screen">
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 56px; margin-bottom: 12px;">🤖</div>
+            <h2>IA Control</h2>
+            <p class="text-small">Gas dinámico · Anti-spam · Protección en tiempo real</p>
+            <div class="text-small mt-2" style="color: var(--primary-gold);">✅ Modo seguro activado</div>
+        </div>
+    </div>
+
+    <!-- Red P2P -->
+    <div id="screen-network" class="screen">
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 56px; margin-bottom: 12px;">🌐</div>
+            <h2>Red P2P</h2>
+            <div class="address-box">📡 Nodo principal: 159.54.129.215:8339</div>
+            <div class="text-small mt-2">🔒 Conexión cifrada · PoUC Consensus</div>
+        </div>
+    </div>
+</div>
+
+<!-- Navegación inferior -->
+<div class="bottom-nav" id="bottom-nav" style="display: none;">
+    <button class="nav-item" data-nav="wallet"><span class="nav-icon">💰</span><span>Wallet</span></button>
+    <button class="nav-item" data-nav="miner"><span class="nav-icon">⛏️</span><span>Minero</span></button>
+    <button class="nav-item" data-nav="explorer"><span class="nav-icon">🔍</span><span>Explorar</span></button>
+    <button class="nav-item" data-nav="ai"><span class="nav-icon">🤖</span><span>IA</span></button>
+    <button class="nav-item" data-nav="network"><span class="nav-icon">🌐</span><span>Red</span></button>
+</div>
+
+<script>
+    // ==================== CONFIGURACIÓN GLOBAL ====================
+    const API_BASE = "http://159.54.129.215:8339/api/v1";
+    const WORDS = [
+        "abismo", "alba", "altar", "ancla", "arbol", "arco", "arena", "asilo", "aurora", "avion",
+        "bajel", "barco", "base", "beso", "borde", "bosque", "brazo", "brillo", "brisa", "broca",
+        "casa", "crema", "luna", "sol", "mar", "tierra", "viento", "fuego", "agua", "piedra",
+        "oro", "plata", "cobre", "madera", "flor", "fruto", "raiz", "hoja", "cielo", "estrella",
+        "nube", "rayo", "trueno", "montaña", "rio", "lago", "oceano", "isla", "valle", "colina"
+    ];
+
+    let currentAddress = "";
+    let miningInterval = null;
+    let currentScreen = "landing";
+
+    // ==================== UTILIDADES ====================
+    async function apiCall(endpoint, options = {}) {
+        try {
+            const response = await fetch(`${API_BASE}${endpoint}`, options);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.error(`API Error [${endpoint}]:`, error);
+            throw error;
+        }
+    }
+
+    function generateSeedPhrase() {
+        const selected = [];
+        for (let i = 0; i < 12; i++) {
+            selected.push(WORDS[Math.floor(Math.random() * WORDS.length)]);
+        }
+        return selected.join(" ");
+    }
+
+    function seedToAddress(seed) {
+        const clean = seed.replace(/\s/g, "");
+        const hash = clean.substring(0, 28).toLowerCase();
+        return `drc_${hash}`;
+    }
+
+    // ==================== ALMACENAMIENTO ====================
+    function saveSession(seed, address) {
+        localStorage.setItem("direccoin_seed", seed);
+        localStorage.setItem("direccoin_address", address);
+        currentAddress = address;
+    }
+
+    function loadSession() {
+        const seed = localStorage.getItem("direccoin_seed");
+        if (seed) {
+            const address = localStorage.getItem("direccoin_address") || seedToAddress(seed);
+            currentAddress = address;
+            return { seed, address };
+        }
+        return null;
+    }
+
+    function clearSession() {
+        localStorage.removeItem("direccoin_seed");
+        localStorage.removeItem("direccoin_address");
+        currentAddress = "";
+    }
+
+    // ==================== CONEXIÓN Y ESTADO ====================
+    async function checkConnection() {
+        try {
+            const data = await apiCall("/estado");
+            const altura = data.altura || 0;
+            document.getElementById("landing-status").innerHTML = `✅ Conectado | Bloque #${altura.toLocaleString()}`;
+            document.getElementById("landing-dot").className = "dot on";
+            document.getElementById("wallet-status").innerHTML = "✅ Conectado";
+            document.getElementById("wallet-dot").className = "dot on";
+            return true;
+        } catch (error) {
+            document.getElementById("landing-status").innerHTML = "⚠️ Sin conexión al nodo";
+            document.getElementById("landing-dot").className = "dot";
+            document.getElementById("wallet-status").innerHTML = "⚠️ Sin conexión";
+            document.getElementById("wallet-dot").className = "dot";
+            return false;
+        }
+    }
+
+    async function loadBalance() {
+        if (!currentAddress) return 0;
+        try {
+            const data = await apiCall(`/saldo/${encodeURIComponent(currentAddress)}`);
+            const balance = data.saldo || 0;
+            document.getElementById("wallet-balance").innerHTML = balance.toLocaleString();
+            return balance;
+        } catch (error) {
+            document.getElementById("wallet-balance").innerHTML = "Error";
+            return 0;
+        }
+    }
+
+    async function loadExplorerData() {
+        try {
+            const data = await apiCall("/estado");
+            document.getElementById("explorer-height").innerHTML = (data.altura || 0).toLocaleString();
+            document.getElementById("explorer-gas").innerHTML = (data.gas_actual_drc || 0.000001).toFixed(8);
+            document.getElementById("explorer-nodes").innerHTML = data.nodos_activos || 1;
+        } catch (error) {
+            console.error("Explorer error:", error);
+        }
+    }
+
+    // ==================== MINADO ====================
+    async function mineBlock() {
+        if (!currentAddress) {
+            const msgDiv = document.getElementById("mine-message");
+            if (msgDiv) msgDiv.innerHTML = "❌ Crea o importa una cuenta primero";
+            return false;
+        }
+
+        const btn = document.getElementById("mine-btn");
+        const msgDiv = document.getElementById("mine-message");
+        const progress = document.getElementById("miner-progress");
+
+        if (btn) btn.disabled = true;
+        if (msgDiv) msgDiv.innerHTML = "⛏️ Minando bloque...";
+        if (progress) progress.style.width = "50%";
+
+        try {
+            const response = await fetch(`${API_BASE}/minar`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ minero: currentAddress })
+            });
+            const data = await response.json();
+
+            if (data.exito) {
+                if (msgDiv) msgDiv.innerHTML = `✅ +${data.recompensa} DRC minados! Bloque #${data.altura}`;
+                if (progress) progress.style.width = "100%";
+                document.getElementById("last-reward").innerHTML = `+${data.recompensa} DRC`;
+                setTimeout(() => { if (progress) progress.style.width = "0%"; }, 500);
+                await loadBalance();
+                await loadExplorerData();
+                await checkConnection();
+                return true;
+            } else {
+                if (msgDiv) msgDiv.innerHTML = `❌ ${data.error || "No se encontró bloque. Intenta de nuevo."}`;
+                if (progress) progress.style.width = "0%";
+                return false;
+            }
+        } catch (error) {
+            if (msgDiv) msgDiv.innerHTML = "❌ Error de conexión con el nodo";
+            if (progress) progress.style.width = "0%";
+            return false;
+        } finally {
+            if (btn) btn.disabled = false;
+            setTimeout(() => {
+                if (msgDiv && msgDiv.innerHTML.includes("✅")) msgDiv.innerHTML = "";
+            }, 3000);
+        }
+    }
+
+    function startMining() {
+        if (!currentAddress) {
+            alert("❌ Primero crea o importa una cuenta");
+            return;
+        }
+        mineBlock();
+    }
+
+    // ==================== TRANSACCIONES ====================
+    async function sendTransaction() {
+        if (!currentAddress) {
+            alert("❌ Primero crea o importa una cuenta");
+            return;
+        }
+
+        const destination = prompt("📤 Dirección destino (drc_...):");
+        if (!destination || !destination.startsWith("drc_")) {
+            alert("Dirección inválida. Debe comenzar con 'drc_'");
+            return;
+        }
+
+        const amount = parseFloat(prompt("💰 Cantidad de DRC a enviar:"));
+        if (isNaN(amount) || amount <= 0) {
+            alert("Cantidad inválida");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/enviar`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ origen: currentAddress, destino: destination, cantidad: amount })
+            });
+            const data = await response.json();
+
+            if (data.exito) {
+                alert(`✅ Transacción exitosa!\n\nEnviado: ${amount.toLocaleString()} DRC\nDestino: ${destination.substring(0, 16)}...`);
+                await loadBalance();
+            } else {
+                alert(`❌ Error: ${data.error || "Saldo insuficiente o dirección inválida"}`);
+            }
+        } catch (error) {
+            alert("❌ Error de conexión. Intenta de nuevo.");
+        }
+    }
+
+    function copyAddress() {
+        if (!currentAddress) {
+            alert("❌ Primero crea o importa una cuenta");
+            return;
+        }
+        navigator.clipboard.writeText(currentAddress);
+        alert(`📥 Dirección copiada al portapapeles:\n\n${currentAddress}`);
+    }
+
+    // ==================== AUTENTICACIÓN ====================
+    function toggleCreateButton() {
+        const checkbox = document.getElementById("seed-confirm");
+        const btn = document.getElementById("create-account-btn");
+        if (btn) btn.disabled = !checkbox.checked;
+    }
+
+    function createAccount() {
+        const seedDiv = document.getElementById("seed-phrase-display");
+        const seed = seedDiv.innerText;
+        const address = seedToAddress(seed);
+        saveSession(seed, address);
+        document.getElementById("wallet-address").innerHTML = address;
+        navigateTo("wallet");
+        loadBalance();
+        checkConnection();
+    }
+
+    function importAccount() {
+        const seed = document.getElementById("import-seed").value.trim();
+        const words = seed.split(/\s+/);
+        if (words.length !== 12) {
+            document.getElementById("import-error").innerHTML = "❌ La frase debe tener exactamente 12 palabras";
+            return;
+        }
+        const address = seedToAddress(seed);
+        saveSession(seed, address);
+        document.getElementById("import-error").innerHTML = "";
+        document.getElementById("wallet-address").innerHTML = address;
+        navigateTo("wallet");
+        loadBalance();
+        checkConnection();
+    }
+
+    // ==================== NAVEGACIÓN ====================
+    function navigateTo(screen) {
+        const screens = ["landing", "welcome", "create", "import", "wallet", "miner", "explorer", "ai", "network"];
+        screens.forEach(s => {
+            const el = document.getElementById(`screen-${s}`);
+            if (el) el.classList.remove("active");
+        });
+
+        const targetScreen = document.getElementById(`screen-${screen}`);
+        if (targetScreen) targetScreen.classList.add("active");
+
+        const bottomNav = document.getElementById("bottom-nav");
+        const mainScreens = ["wallet", "miner", "explorer", "ai", "network"];
+        bottomNav.style.display = mainScreens.includes(screen) ? "flex" : "none";
+
+        if (mainScreens.includes(screen)) {
+            document.querySelectorAll(".nav-item").forEach(item => {
+                const navId = item.getAttribute("data-nav");
+                if ((navId === "wallet" && screen === "wallet") ||
+                    (navId === "miner" && screen === "miner") ||
+                    (navId === "explorer" && screen === "explorer") ||
+                    (navId === "ai" && screen === "ai") ||
+                    (navId === "network" && screen === "network")) {
+                    item.classList.add("active");
+                } else {
+                    item.classList.remove("active");
+                }
+            });
+        }
+
+        if (screen === "wallet") {
+            loadBalance();
+            checkConnection();
+        }
+        if (screen === "explorer") {
+            loadExplorerData();
+        }
+        if (screen === "create") {
+            document.getElementById("seed-phrase-display").innerHTML = generateSeedPhrase();
+            document.getElementById("seed-confirm").checked = false;
+            const btn = document.getElementById("create-account-btn");
+            if (btn) btn.disabled = true;
+        }
+        if (screen === "import") {
+            document.getElementById("import-seed").value = "";
+            document.getElementById("import-error").innerHTML = "";
+        }
+
+        currentScreen = screen;
+        window.scrollTo(0, 0);
+    }
+
+    // ==================== INICIALIZACIÓN ====================
+    async function init() {
+        const session = loadSession();
+        if (session) {
+            document.getElementById("wallet-address").innerHTML = session.address;
+            await loadBalance();
+            navigateTo("wallet");
+        } else {
+            navigateTo("landing");
+        }
+        await checkConnection();
+        await loadExplorerData();
+
+        document.querySelectorAll(".nav-item").forEach(item => {
+            item.addEventListener("click", () => {
+                const navId = item.getAttribute("data-nav");
+                if (navId === "wallet") navigateTo("wallet");
+                if (navId === "miner") navigateTo("miner");
+                if (navId === "explorer") navigateTo("explorer");
+                if (navId === "ai") navigateTo("ai");
+                if (navId === "network") navigateTo("network");
+            });
+        });
+
+        console.log("✅ Direccoin Wallet v1.0 - Blockchain Activa");
+    }
+
+    init();
+</script>
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>DirecCoin | Red L1 · PoUC · IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --fire: #FF6B35;
+            --bg: #03030a;
+            --card: rgba(12, 14, 24, 0.85);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #f0f0ff;
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .cosmos {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            background: radial-gradient(ellipse at 30% 25%, #0a0d1a 0%, #03030a 70%);
+        }
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image:
+                radial-gradient(1.5px 1.5px at 10% 15%, rgba(255,215,0,0.5), transparent),
+                radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.35), transparent),
+                radial-gradient(2px 2px at 55% 18%, rgba(255,180,0,0.45), transparent),
+                radial-gradient(1px 1px at 72% 50%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 85% 30%, rgba(255,215,0,0.55), transparent),
+                radial-gradient(1px 1px at 18% 65%, rgba(255,180,0,0.35), transparent),
+                radial-gradient(1.5px 1.5px at 60% 72%, rgba(255,215,0,0.4), transparent),
+                radial-gradient(1px 1px at 92% 80%, rgba(255,255,255,0.25), transparent);
+        }
+        .nebula {
+            position: fixed; top: -20%; right: -15%; width: 75%; height: 85%; z-index: -1;
+            background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, rgba(255,215,0,0.05) 30%, transparent 60%);
+            filter: blur(70px); pointer-events: none;
+        }
+        .container {
+            max-width: 580px; margin: 0 auto;
+            padding: 1rem 1rem 6rem;
+            position: relative; z-index: 2;
+        }
+
+        /* LOGO */
+        .logo-section { text-align: center; margin-bottom: 1.2rem; padding-top: 0.3rem; }
+        .logo-img {
+            width: 85px; height: 85px; margin: 0 auto 0.6rem;
+            border-radius: 50%; object-fit: contain;
+            animation: logoFloat 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px rgba(255,215,0,0.5));
+        }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+        .logo-title {
+            font-size: 2.2rem; font-weight: 900;
+            background: linear-gradient(135deg, #FFE5A0, #FFD700, #FFA500, #FF6B35);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            letter-spacing: -1.5px; line-height: 1;
+        }
+        .logo-sub {
+            font-size: 0.6rem; color: #7b7f9a;
+            letter-spacing: 2.5px; text-transform: uppercase; margin-top: 3px;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 22px; padding: 1.3rem; margin-bottom: 0.8rem;
+            border: 1px solid rgba(255,215,0,0.06);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+            transition: all 0.3s ease;
+        }
+        .card:active { transform: scale(0.985); }
+        .card-gold {
+            background: linear-gradient(155deg, #FFD700 0%, #FFB800 35%, #FF8C00 100%);
+            color: #0a0a14; border: none;
+            position: relative; overflow: hidden;
+        }
+        .card-gold::after {
+            content: ''; position: absolute; top: -60%; left: -60%; width: 220%; height: 220%;
+            background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 50%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { transform: translate(-40%, -40%) rotate(0deg); }
+            50% { transform: translate(40%, 40%) rotate(180deg); }
+        }
+        .card-gold * { position: relative; z-index: 1; }
+        .balance-number {
+            font-size: 3.2rem; font-weight: 900; text-align: center;
+            letter-spacing: -3px; margin: 0.2rem 0;
+            font-variant-numeric: tabular-nums;
+        }
+        .card-gold .balance-number { color: #0a0a14 !important; }
+
+        /* PANTALLAS ESPECÍFICAS */
+        .miner-icon-big {
+            font-size: 4rem; color: var(--gold);
+            animation: minerPulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255,215,0,0.4));
+        }
+        @keyframes minerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .explorer-stat {
+            display: flex; align-items: center; gap: 1rem; padding: 0.8rem 0;
+        }
+        .explorer-stat i {
+            font-size: 2rem; color: var(--gold);
+            width: 50px; text-align: center;
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.3));
+        }
+        .explorer-stat .stat-value {
+            font-size: 1.8rem; font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--fire));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .ai-glow {
+            font-size: 4rem; color: var(--gold);
+            animation: aiThink 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255,215,0,0.5));
+        }
+        @keyframes aiThink {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(2deg); }
+            75% { transform: scale(0.95) rotate(-2deg); }
+        }
+        .network-nodes {
+            display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0;
+        }
+        .node-dot {
+            width: 18px; height: 18px; border-radius: 50%;
+            background: #00e676;
+            box-shadow: 0 0 12px #00e676;
+            animation: nodeGlow 2s ease-in-out infinite;
+        }
+        .node-dot:nth-child(2) { animation-delay: 0.3s; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+        .node-dot:nth-child(3) { animation-delay: 0.6s; }
+        @keyframes nodeGlow {
+            0%, 100% { opacity: 0.6; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* BOTONES */
+        .btn {
+            display: block; width: 100%; padding: 0.85rem;
+            border-radius: 50px; font-weight: 700; text-align: center;
+            border: none; cursor: pointer; font-size: 0.82rem;
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
+            letter-spacing: 0.4px;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #0a0a14; box-shadow: 0 8px 24px rgba(255,215,0,0.3);
+        }
+        .btn-gold:active { transform: scale(0.95); opacity: 0.85; }
+        .btn-glass {
+            background: rgba(255,255,255,0.03); color: var(--gold);
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+        .btn-outline {
+            background: transparent; color: #eef2ff;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+
+        /* INPUTS */
+        input, textarea {
+            width: 100%; padding: 0.8rem 1rem;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,215,0,0.18);
+            border-radius: 16px; color: white; font-size: 0.82rem;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--gold); }
+        .address-badge {
+            background: rgba(0,0,0,0.5); padding: 0.5rem 0.8rem;
+            border-radius: 50px; font-family: monospace;
+            font-size: 0.6rem; text-align: center; word-break: break-all;
+            border: 1px solid rgba(255,215,0,0.12); margin: 0.4rem 0;
+            color: #7b7f9a;
+        }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(0,0,0,0.5); padding: 0.25rem 0.7rem;
+            border-radius: 20px; font-size: 0.65rem;
+        }
+        .led {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #ff3b30; transition: all 0.2s;
+        }
+        .led.on {
+            background: #00e676;
+            box-shadow: 0 0 8px #00e676;
+            animation: ledPulse 1.5s infinite;
+        }
+        @keyframes ledPulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.4); }
+        }
+        .progress-bar {
+            background: rgba(255,255,255,0.06); height: 5px;
+            border-radius: 6px; margin: 0.8rem 0; overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, var(--gold), var(--fire));
+            height: 100%; width: 0%; border-radius: 6px; transition: width 0.35s;
+        }
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 580px;
+            background: rgba(6,6,16,0.98); backdrop-filter: blur(30px);
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 0.3rem 0.3rem 0.8rem;
+            border-top: 1px solid rgba(255,215,0,0.1); z-index: 100;
+            border-radius: 16px 16px 0 0;
+        }
+        .nav-btn {
+            background: none; border: none; color: #7b7f9a;
+            font-size: 0.55rem; display: flex; flex-direction: column;
+            align-items: center; gap: 2px; cursor: pointer;
+            padding: 0.3rem 0.4rem; border-radius: 14px;
+            min-width: 42px; transition: all 0.2s;
+        }
+        .nav-btn i { font-size: 1.1rem; }
+        .nav-btn.active { color: var(--gold); background: rgba(255,215,0,0.07); }
+        .nav-btn span { font-size: 0.5rem; font-weight: 500; }
+        .screen { display: none; animation: fadeUp 0.4s ease; }
+        .screen.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .seed-box {
+            background: #0a0a16; border-radius: 16px; padding: 1.2rem;
+            font-family: monospace; font-size: 0.75rem; text-align: center;
+            border: 1px solid var(--gold); margin: 0.8rem 0; word-break: break-word;
+        }
+        .section-title {
+            font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem;
+            display: flex; align-items: center; gap: 0.4rem;
+            border-left: 3px solid var(--gold); padding-left: 0.6rem;
+        }
+        .section-title i { color: var(--gold); }
+        .text-center { text-align: center; }
+        .text-muted { color: #7b7f9a; font-size: 0.65rem; }
+        hr { border-color: rgba(255,215,0,0.08); margin: 0.8rem 0; }
+    </style>
+</head>
+<body>
+<div class="cosmos"></div>
+<div class="stars"></div>
+<div class="nebula"></div>
+
+<div class="container">
+    <!-- LANDING -->
+    <div id="screen-landing" class="screen active">
+        <div class="logo-section">
+            <img src="logo.png" alt="DirecCoin" class="logo-img">
+            <div class="logo-title">DIRECCOIN</div>
+            <div class="logo-sub">Blockchain L1 · IA · PoUC</div>
+        </div>
+        <div class="card text-center">
+            <p style="margin-bottom:0.6rem;">La nueva era de la blockchain</p>
+            <div class="status-badge" style="justify-content:center;">
+                <span class="led" id="landing-led"></span>
+                <span id="landing-status">Conectando...</span>
+            </div>
+        </div>
+        <button class="btn btn-gold" onclick="navigateTo('welcome')"><i class="fas fa-wallet"></i> Abrir Wallet</button>
+        <button class="btn btn-glass" onclick="navigateTo('explorer')" style="margin-top:0.6rem;"><i class="fas fa-chart-line"></i> Explorador</button>
+    </div>
+
+    <!-- WELCOME -->
+    <div id="screen-welcome" class="screen">
+        <div class="card text-center">
+            <i class="fas fa-shield-haltered" style="font-size:2.5rem;color:var(--gold);margin-bottom:0.4rem;filter:drop-shadow(0 0 15px rgba(255,215,0,0.4));"></i>
+            <p style="font-weight:600;">Wallet Descentralizada</p>
+            <p class="text-muted">No custodial · Tú tienes las llaves</p>
+        </div>
+        <button class="btn btn-gold" onclick="navigateTo('create')"><i class="fas fa-plus-circle"></i> Crear nueva cuenta</button>
+        <button class="btn btn-glass" onclick="navigateTo('import')" style="margin-top:0.6rem;"><i class="fas fa-key"></i> Importar frase semilla</button>
+        <button class="btn btn-outline" onclick="navigateTo('landing')" style="margin-top:0.8rem;">← Volver al inicio</button>
+    </div>
+
+    <!-- CREATE -->
+    <div id="screen-create" class="screen">
+        <h2 class="section-title"><i class="fas fa-seedling"></i> Frase semilla</h2>
+        <div class="seed-box" id="seed-phrase-display"></div>
+        <p class="text-muted text-center" style="color:#ffaa33;"><i class="fas fa-exclamation-triangle"></i> Guarda estas 12 palabras. Sin ellas pierdes tu cuenta.</p>
+        <label style="display:flex;align-items:center;gap:0.4rem;margin:0.6rem 0;cursor:pointer;">
+            <input type="checkbox" id="seed-confirm" onchange="toggleCreateButton()">
+            <span class="text-muted">✅ Guardé mi frase en un lugar seguro</span>
+        </label>
+        <button class="btn btn-gold" id="create-account-btn" disabled onclick="createAccount()">🚀 Crear y Entrar</button>
+        <button class="btn btn-outline" onclick="navigateTo('welcome')" style="margin-top:0.6rem;">← Volver</button>
+    </div>
+
+    <!-- IMPORT -->
+    <div id="screen-import" class="screen">
+        <h2 class="section-title"><i class="fas fa-key"></i> Importar frase semilla</h2>
+        <textarea id="import-seed" rows="3" placeholder="12 palabras separadas por espacios..."></textarea>
+        <div class="text-muted text-center" id="import-error" style="color:#ff6b6b;"></div>
+        <button class="btn btn-gold" onclick="importAccount()" style="margin-top:0.5rem;"><i class="fas fa-unlock-alt"></i> Desbloquear wallet</button>
+        <button class="btn btn-outline" onclick="navigateTo('welcome')" style="margin-top:0.6rem;">← Volver</button>
+    </div>
+
+    <!-- WALLET -->
+    <div id="screen-wallet" class="screen">
+        <div class="card card-gold text-center">
+            <div class="text-muted" style="color:rgba(0,0,0,0.55)!important;letter-spacing:1.5px;font-size:0.6rem;">SALDO DISPONIBLE</div>
+            <div class="balance-number" id="wallet-balance">0</div>
+            <div class="text-muted" style="color:rgba(0,0,0,0.55)!important;">DRC</div>
+        </div>
+        <div class="grid-2">
+            <button class="btn btn-gold" onclick="sendTransaction()"><i class="fas fa-paper-plane"></i> Enviar</button>
+            <button class="btn btn-glass" onclick="copyAddress()"><i class="fas fa-copy"></i> Recibir</button>
+        </div>
+        <div class="address-badge" id="wallet-address">Cargando dirección...</div>
+        <div class="status-badge" style="justify-content:center;margin-top:0.8rem;">
+            <span class="led" id="wallet-led"></span>
+            <span id="wallet-status">Conectando...</span>
+        </div>
+    </div>
+
+    <!-- MINER -->
+    <div id="screen-miner" class="screen">
+        <div class="card text-center">
+            <i class="fas fa-hard-hat miner-icon-big"></i>
+            <h2 style="margin:0.3rem 0;font-size:1.2rem;">Minero PoUC</h2>
+            <p class="text-muted">Recompensa: <strong style="color:var(--gold);font-size:1.1rem;">100 DRC</strong> / bloque</p>
+            <div class="progress-bar"><div class="progress-fill" id="miner-progress"></div></div>
+            <button class="btn btn-gold" id="mine-btn" onclick="startMining()"><i class="fas fa-gem"></i> Minar ahora</button>
+            <div id="mine-message" class="text-muted" style="margin-top:0.6rem;"></div>
+        </div>
+        <div class="card text-center">
+            <div class="text-muted">Última recompensa</div>
+            <div id="last-reward" style="font-size:1.6rem;font-weight:800;color:var(--gold);">---</div>
+        </div>
+    </div>
+
+    <!-- EXPLORER -->
+    <div id="screen-explorer" class="screen">
+        <div class="card">
+            <div class="explorer-stat">
+                <i class="fas fa-cubes"></i>
+                <div>
+                    <div class="text-muted">ALTURA DE RED</div>
+                    <div class="stat-value" id="explorer-height">0</div>
+                </div>
+            </div>
+            <hr>
+            <div class="explorer-stat">
+                <i class="fas fa-gas-pump"></i>
+                <div>
+                    <div class="text-muted">GAS ACTUAL</div>
+                    <div class="stat-value" id="explorer-gas" style="font-size:1.2rem;">0</div>
+                </div>
+            </div>
+            <hr>
+            <div class="explorer-stat">
+                <i class="fas fa-network-wired"></i>
+                <div>
+                    <div class="text-muted">NODOS ACTIVOS</div>
+                    <div class="stat-value" id="explorer-nodes" style="font-size:1.5rem;">1</div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-outline" onclick="navigateTo('landing')">← Volver al inicio</button>
+    </div>
+
+    <!-- IA -->
+    <div id="screen-ai" class="screen">
+        <div class="card text-center">
+            <i class="fas fa-brain ai-glow"></i>
+            <h2 style="margin:0.3rem 0;">IA Control</h2>
+            <p class="text-muted">Gas dinámico · Anti-spam · Protección en tiempo real</p>
+            <hr>
+            <div class="status-badge" style="justify-content:center;">
+                <span class="led on"></span>
+                <span>Modo seguro activado</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- RED -->
+    <div id="screen-network" class="screen">
+        <div class="card text-center">
+            <i class="fas fa-globe" style="font-size:3rem;color:var(--gold);filter:drop-shadow(0 0 20px rgba(255,215,0,0.4));margin-bottom:0.3rem;"></i>
+            <h2>Red P2P</h2>
+            <div class="network-nodes">
+                <div class="node-dot"></div>
+                <div class="node-dot"></div>
+                <div class="node-dot"></div>
+            </div>
+            <div class="address-badge" style="margin-top:0.5rem;">📡 Nodo principal: 159.54.129.215:8339</div>
+            <p class="text-muted">🔒 Conexión cifrada · PoUC Consensus</p>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-nav" id="bottom-nav" style="display:none;">
+    <button class="nav-btn" data-nav="wallet"><i class="fas fa-wallet"></i><span>Wallet</span></button>
+    <button class="nav-btn" data-nav="miner"><i class="fas fa-gem"></i><span>Minero</span></button>
+    <button class="nav-btn" data-nav="market"><i class="fas fa-store"></i><span>Market</span></button>
+    <button class="nav-btn" data-nav="explorer"><i class="fas fa-chart-line"></i><span>Explorar</span></button>
+    <button class="nav-btn" data-nav="ai"><i class="fas fa-robot"></i><span>IA</span></button>
+    <button class="nav-btn" data-nav="network"><i class="fas fa-globe"></i><span>Red</span></button>
+    <button class="nav-btn" data-nav="api"><i class="fas fa-code"></i><span>API</span></button>
+    <button class="nav-btn" data-nav="whitepaper"><i class="fas fa-file-alt"></i><span>Paper</span></button>
+</div>
+
+<script>
+    const API_BASE = "https://direccoin.org/api/v1";
+    const WORDS = ["abismo","alba","altar","ancla","arbol","arco","arena","asilo","aurora","avion","bajel","barco","base","beso","borde","bosque","brazo","brillo","brisa","broca","casa","crema","luna","sol","mar","tierra","viento","fuego","agua","piedra","oro","plata","cobre","madera","flor","fruto","raiz","hoja","cielo","estrella","nube","rayo","trueno","montaña","rio","lago","oceano","isla","valle","colina"];
+    let currentAddress = "";
+
+    async function apiCall(endpoint, options = {}) {
+        const r = await fetch(`${API_BASE}${endpoint}`, options);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return await r.json();
+    }
+
+    function generateSeedPhrase() {
+        const s = [];
+        for (let i = 0; i < 12; i++) s.push(WORDS[Math.floor(Math.random() * WORDS.length)]);
+        return s.join(" ");
+    }
+
+    function seedToAddress(seed) {
+        return `drc_${seed.replace(/\s/g,"").substring(0,28).toLowerCase()}`;
+    }
+
+    function saveSession(seed, address) {
+        localStorage.setItem("direccoin_seed", seed);
+        localStorage.setItem("direccoin_address", address);
+        currentAddress = address;
+    }
+
+    function loadSession() {
+        const seed = localStorage.getItem("direccoin_seed");
+        if (seed) {
+            currentAddress = localStorage.getItem("direccoin_address") || seedToAddress(seed);
+            return { seed, address: currentAddress };
+        }
+        return null;
+    }
+
+    async function checkConnection() {
+        try {
+            const data = await apiCall("/estado");
+            document.getElementById("landing-status").innerHTML = `✅ Conectado | Bloque #${(data.altura||0).toLocaleString()}`;
+            document.getElementById("landing-led").className = "led on";
+            document.getElementById("wallet-status").innerHTML = "✅ Conectado";
+            document.getElementById("wallet-led").className = "led on";
+            return true;
+        } catch(e) {
+            document.getElementById("landing-status").innerHTML = "⚠️ Sin conexión";
+            document.getElementById("landing-led").className = "led";
+            document.getElementById("wallet-status").innerHTML = "⚠️ Sin conexión";
+            document.getElementById("wallet-led").className = "led";
+            return false;
+        }
+    }
+
+    async function loadBalance() {
+        if (!currentAddress) return 0;
+        try {
+            const data = await apiCall(`/saldo/${encodeURIComponent(currentAddress)}`);
+            document.getElementById("wallet-balance").innerHTML = (data.saldo||0).toLocaleString();
+            return data.saldo||0;
+        } catch(e) { return 0; }
+    }
+
+    async function loadExplorerData() {
+        try {
+            const data = await apiCall("/estado");
+            document.getElementById("explorer-height").innerHTML = (data.altura||0).toLocaleString();
+            document.getElementById("explorer-gas").innerHTML = (data.gas_actual_drc||0.000001).toFixed(8) + " DRC";
+            document.getElementById("explorer-nodes").innerHTML = data.nodos_activos||1;
+        } catch(e) {}
+    }
+
+    async function mineBlock() {
+        if (!currentAddress) { document.getElementById("mine-message").innerHTML = "❌ Crea o importa una cuenta primero"; return false; }
+        const btn = document.getElementById("mine-btn"), msg = document.getElementById("mine-message"), prog = document.getElementById("miner-progress");
+        btn.disabled = true; msg.innerHTML = "⛏️ Minando..."; prog.style.width = "50%";
+        try {
+            const data = await apiCall("/minar", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({minero:currentAddress}) });
+            if (data.exito) {
+                msg.innerHTML = `✅ +${data.recompensa} DRC | Bloque #${data.altura}`;
+                prog.style.width = "100%";
+                document.getElementById("last-reward").innerHTML = `+${data.recompensa} DRC`;
+                setTimeout(() => { prog.style.width = "0%"; }, 500);
+                await loadBalance(); await loadExplorerData(); await checkConnection();
+                return true;
+            } else { msg.innerHTML = `❌ ${data.error||"Intenta de nuevo."}`; prog.style.width = "0%"; return false; }
+        } catch(e) { msg.innerHTML = "❌ Error de conexión"; prog.style.width = "0%"; return false; }
+        finally { btn.disabled = false; }
+    }
+
+    function startMining() { if (!currentAddress) { alert("❌ Primero crea o importa una cuenta"); return; } mineBlock(); }
+
+    async function sendTransaction() {
+        if (!currentAddress) { alert("❌ Primero crea o importa una cuenta"); return; }
+        const dest = prompt("📤 Dirección destino (drc_...):");
+        if (!dest || !dest.startsWith("drc_")) { alert("Dirección inválida"); return; }
+        const amt = parseFloat(prompt("💰 Cantidad de DRC:"));
+        if (isNaN(amt) || amt <= 0) { alert("Cantidad inválida"); return; }
+        try {
+            const data = await apiCall("/enviar", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({origen:currentAddress, destino:dest, cantidad:amt}) });
+            if (data.exito) { alert(`✅ ${amt.toLocaleString()} DRC enviados`); await loadBalance(); }
+            else alert(`❌ ${data.error}`);
+        } catch(e) { alert("❌ Error de conexión"); }
+    }
+
+    function copyAddress() {
+        if (!currentAddress) { alert("❌ Primero crea o importa una cuenta"); return; }
+        navigator.clipboard.writeText(currentAddress);
+        alert("📥 Dirección copiada");
+    }
+
+    function toggleCreateButton() { document.getElementById("create-account-btn").disabled = !document.getElementById("seed-confirm").checked; }
+
+    function createAccount() {
+        const seed = document.getElementById("seed-phrase-display").innerText;
+        saveSession(seed, seedToAddress(seed));
+        document.getElementById("wallet-address").innerHTML = currentAddress;
+        navigateTo("wallet"); loadBalance(); checkConnection();
+    }
+
+    function importAccount() {
+        const seed = document.getElementById("import-seed").value.trim();
+        if (seed.split(/\s+/).length !== 12) { document.getElementById("import-error").innerHTML = "❌ Deben ser 12 palabras"; return; }
+        saveSession(seed, seedToAddress(seed));
+        document.getElementById("import-error").innerHTML = "";
+        document.getElementById("wallet-address").innerHTML = currentAddress;
+        navigateTo("wallet"); loadBalance(); checkConnection();
+    }
+
+    function navigateTo(screen) {
+        ["landing","welcome","create","import","wallet","miner","explorer","ai","network"].forEach(s => {
+            const el = document.getElementById(`screen-${s}`);
+            if (el) el.classList.remove("active");
+        });
+        if (screen === "market") { window.location.href = "market_final.html"; return; }
+        if (screen === "whitepaper") { window.open("https://direc-whipaper.netlify.app","_blank"); return; }
+        if (screen === "api") { window.open("http://159.54.129.215:8340/api/public/docs","_blank"); return; }
+        const target = document.getElementById(`screen-${screen}`);
+        if (target) target.classList.add("active");
+        const nav = document.getElementById("bottom-nav");
+        const main = ["wallet","miner","explorer","ai","network"];
+        nav.style.display = main.includes(screen) ? "flex" : "none";
+        if (main.includes(screen)) {
+            document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.getAttribute("data-nav") === screen));
+        }
+        if (screen === "wallet") { loadBalance(); checkConnection(); }
+        if (screen === "explorer") loadExplorerData();
+        if (screen === "create") {
+            document.getElementById("seed-phrase-display").innerHTML = generateSeedPhrase();
+            document.getElementById("seed-confirm").checked = false;
+            document.getElementById("create-account-btn").disabled = true;
+        }
+        if (screen === "import") { document.getElementById("import-seed").value = ""; document.getElementById("import-error").innerHTML = ""; }
+        window.scrollTo(0, 0);
+    }
+
+    async function init() {
+        const session = loadSession();
+        if (session) { document.getElementById("wallet-address").innerHTML = session.address; await loadBalance(); navigateTo("wallet"); }
+        else navigateTo("landing");
+        await checkConnection(); await loadExplorerData();
+        document.querySelectorAll(".nav-btn").forEach(b => b.addEventListener("click", () => { const n = b.getAttribute("data-nav"); if (n) navigateTo(n); }));
+    }
+    init();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Proteger identidad de Direct
+direct.json
+direct_backup.txt
+*.key
+*.pem

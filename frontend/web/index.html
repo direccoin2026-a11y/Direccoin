@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>DirecCoin | Red Blockchain L1 · PoUC · IA · Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --gold: #E8B830;
+            --gold2: #F5D06B;
+            --accent: #FF6B4A;
+            --bg: #0F1119;
+            --card: rgba(22, 25, 38, 0.85);
+            --text: #EEF0F6;
+            --muted: #8B8FA8;
+            --radius: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Fondo animado */
+        .cosmos {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            background: linear-gradient(160deg, #0F1119 0%, #1A1F30 50%, #0F1119 100%);
+        }
+        .particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image:
+                radial-gradient(2px 2px at 15% 25%, rgba(232,184,48,0.5), transparent),
+                radial-gradient(1px 1px at 35% 50%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(2px 2px at 55% 20%, rgba(255,107,74,0.4), transparent),
+                radial-gradient(1px 1px at 72% 55%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 85% 35%, rgba(232,184,48,0.5), transparent),
+                radial-gradient(1px 1px at 20% 70%, rgba(255,107,74,0.3), transparent),
+                radial-gradient(1.5px 1.5px at 60% 75%, rgba(232,184,48,0.4), transparent),
+                radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.25), transparent);
+            animation: particleDrift 8s ease-in-out infinite alternate;
+        }
+        @keyframes particleDrift {
+            0% { opacity: 0.6; transform: translate(0, 0); }
+            100% { opacity: 1; transform: translate(-5px, -5px); }
+        }
+        .aurora {
+            position: fixed; top: -25%; right: -20%; width: 80%; height: 90%; z-index: -1;
+            background: radial-gradient(circle, rgba(232,184,48,0.08) 0%, rgba(255,107,74,0.05) 35%, transparent 65%);
+            filter: blur(70px); pointer-events: none;
+            animation: auroraPulse 6s ease-in-out infinite;
+        }
+        @keyframes auroraPulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .container { max-width: 580px; margin: 0 auto; padding: 1.5rem 1rem 6rem; position: relative; z-index: 2; }
+
+        /* Logo */
+        .logo-area { text-align: center; margin-bottom: 1.8rem; }
+        .logo-ring {
+            width: 90px; height: 90px; margin: 0 auto 0.8rem;
+            background: conic-gradient(from 0deg, #E8B830, #FF6B4A, #E8B830);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            animation: ringSpin 10s linear infinite;
+            box-shadow: 0 0 40px rgba(232,184,48,0.3), 0 0 80px rgba(255,107,74,0.2);
+        }
+        .logo-ring img {
+            width: 74px; height: 74px; border-radius: 50%; object-fit: contain;
+            background: #1A1F30; padding: 4px;
+            animation: ringSpinReverse 10s linear infinite;
+        }
+        @keyframes ringSpin { to { transform: rotate(360deg); } }
+        @keyframes ringSpinReverse { to { transform: rotate(-360deg); } }
+        .logo-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.4rem; font-weight: 900;
+            background: linear-gradient(135deg, #F5D06B, #E8B830, #FF6B4A);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            letter-spacing: -2px; line-height: 1.1;
+        }
+        .logo-sub {
+            font-size: 0.65rem; color: var(--muted);
+            letter-spacing: 3px; text-transform: uppercase; margin-top: 4px;
+        }
+
+        /* Cards */
+        .glass-card {
+            background: var(--card);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(232,184,48,0.1);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(232,184,48,0.3), transparent);
+        }
+        .glass-card:hover {
+            border-color: rgba(232,184,48,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+        }
+        .gold-gradient-bg {
+            background: linear-gradient(145deg, #E8B830, #F5D06B, #FF6B4A);
+            color: #0F1119; border: none;
+            position: relative; overflow: hidden;
+        }
+        .gold-gradient-bg::after {
+            content: ''; position: absolute; top: -60%; left: -60%; width: 220%; height: 220%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 50%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { transform: translate(-40%, -40%) rotate(0deg); }
+            50% { transform: translate(40%, 40%) rotate(180deg); }
+        }
+        .gold-gradient-bg * { position: relative; z-index: 1; }
+        .balance-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.4rem; font-weight: 900; text-align: center;
+            letter-spacing: -3px; margin: 0.3rem 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Botones */
+        .btn {
+            display: block; width: 100%; padding: 0.9rem;
+            border-radius: 50px; font-weight: 700; text-align: center;
+            border: none; cursor: pointer; font-size: 0.85rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+            letter-spacing: 0.5px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #E8B830, #FF6B4A);
+            color: #FFF; box-shadow: 0 8px 28px rgba(232,184,48,0.35);
+        }
+        .btn-primary:active { transform: scale(0.95); }
+        .btn-secondary {
+            background: rgba(232,184,48,0.08); color: var(--gold);
+            border: 1px solid rgba(232,184,48,0.2);
+        }
+        .btn-outline {
+            background: transparent; color: var(--text);
+            border: 1px solid rgba(232,184,48,0.25);
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+
+        /* Inputs */
+        input, textarea {
+            width: 100%; padding: 0.9rem 1.2rem;
+            background: rgba(0,0,0,0.4); border: 1px solid rgba(232,184,48,0.2);
+            border-radius: 18px; color: white; font-size: 0.85rem;
+            transition: all 0.25s;
+        }
+        input:focus, textarea:focus {
+            outline: none; border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(232,184,48,0.15);
+        }
+        .address-display {
+            background: rgba(0,0,0,0.4); padding: 0.6rem 1rem;
+            border-radius: 50px; font-family: 'SF Mono', monospace;
+            font-size: 0.6rem; text-align: center; word-break: break-all;
+            border: 1px solid rgba(232,184,48,0.15); margin: 0.5rem 0;
+            color: var(--muted);
+        }
+
+        /* Estado */
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(0,0,0,0.4); padding: 0.3rem 0.9rem;
+            border-radius: 25px; font-size: 0.7rem;
+        }
+        .led { width: 10px; height: 10px; border-radius: 50%; background: #ff3b30; }
+        .led.on { background: #4ADE80; box-shadow: 0 0 10px #4ADE80; animation: ledPulse 2s infinite; }
+        @keyframes ledPulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.5); }
+        }
+
+        /* Progreso */
+        .progress-bar { background: rgba(255,255,255,0.06); height: 5px; border-radius: 8px; margin: 0.8rem 0; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--gold), var(--accent)); height: 100%; width: 0%; border-radius: 8px; transition: width 0.4s; box-shadow: 0 0 10px rgba(232,184,48,0.3); }
+
+        /* Nav */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 580px;
+            background: rgba(12,14,22,0.97); backdrop-filter: blur(30px);
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 0.35rem 0.4rem 0.85rem;
+            border-top: 1px solid rgba(232,184,48,0.12); z-index: 100;
+            border-radius: 18px 18px 0 0;
+        }
+        .nav-btn {
+            background: none; border: none; color: var(--muted);
+            font-size: 0.55rem; display: flex; flex-direction: column;
+            align-items: center; gap: 2px; cursor: pointer;
+            padding: 0.3rem 0.4rem; border-radius: 14px;
+            min-width: 42px; transition: all 0.2s;
+        }
+        .nav-btn i { font-size: 1.15rem; }
+        .nav-btn.active { color: var(--gold); background: rgba(232,184,48,0.08); }
+        .nav-btn span { font-size: 0.5rem; font-weight: 500; }
+
+        /* Screens */
+        .screen { display: none; animation: fadeUp 0.4s cubic-bezier(0.2,0.9,0.4,1); }
+        .screen.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+        .seed-box {
+            background: rgba(0,0,0,0.4); border-radius: 18px; padding: 1.5rem;
+            font-family: monospace; font-size: 0.8rem; text-align: center;
+            border: 1px solid var(--gold); margin: 1rem 0; word-break: break-word;
+        }
+        .section-title {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;
+            display: flex; align-items: center; gap: 0.5rem;
+            border-left: 3px solid var(--gold); padding-left: 0.8rem;
+        }
+        .section-title i { color: var(--gold); }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--muted); font-size: 0.65rem; }
+        .text-small { font-size: 0.7rem; opacity: 0.8; }
+        hr { border-color: rgba(232,184,48,0.1); margin: 0.8rem 0; }
+    </style>
+</head>
+<body>
+<div class="cosmos"></div>
+<div class="particles"></div>
+<div class="aurora"></div>
+
+<div class="container">
+    <div id="screen-landing" class="screen active">
+        <div class="logo-area">
+            <div class="logo-ring"><img src="logo.png" alt="DirecCoin"></div>
+            <div class="logo-title">DIRECCOIN</div>
+            <div class="logo-sub">Blockchain L1 · IA · PoUC</div>
+        </div>
+        <div class="glass-card text-center">
+            <p style="margin-bottom:0.6rem;font-weight:500;">La nueva era de la blockchain</p>
+            <div class="status-badge" style="justify-content:center;">
+                <span class="led" id="landing-led"></span>
+                <span id="landing-status">Conectando...</span>
+            </div>
+        </div>
+        <button class="btn btn-primary" onclick="navigateTo('welcome')"><i class="fas fa-wallet"></i> Abrir Wallet</button>
+        <button class="btn btn-secondary" onclick="navigateTo('explorer')" style="margin-top:0.6rem;"><i class="fas fa-chart-line"></i> Explorador</button>
+    </div>
+
+    <div id="screen-welcome" class="screen">
+        <div class="glass-card text-center">
+            <i class="fas fa-shield-haltered" style="font-size:2.5rem;color:var(--gold);margin-bottom:0.4rem;"></i>
+            <p style="font-weight:600;">Wallet Descentralizada</p>
+            <p class="text-muted">No custodial · Tú tienes las llaves</p>
+        </div>
+        <button class="btn btn-primary" onclick="navigateTo('create')"><i class="fas fa-plus-circle"></i> Crear nueva cuenta</button>
+        <button class="btn btn-secondary" onclick="navigateTo('import')" style="margin-top:0.6rem;"><i class="fas fa-key"></i> Importar frase semilla</button>
+        <button class="btn btn-outline" onclick="navigateTo('landing')" style="margin-top:0.8rem;">← Volver al inicio</button>
+    </div>
+
+    <div id="screen-create" class="screen">
+        <h2 class="section-title"><i class="fas fa-seedling"></i> Frase semilla</h2>
+        <div class="seed-box" id="seed-phrase-display"></div>
+        <p class="text-small text-center" style="color:#FF6B4A;"><i class="fas fa-exclamation-triangle"></i> Guarda estas 12 palabras. Sin ellas pierdes tu cuenta.</p>
+        <div style="margin:0.6rem 0;">
+            <label class="text-small"><i class="fas fa-users"></i> Código de referido (opcional)</label>
+            <input type="text" id="codigo-referido-input" placeholder="drc_..." style="font-size:0.75rem;margin-top:0.2rem;">
+            <p class="text-muted">Si alguien te invitó, pega su código. ¡Ambos ganan 1 boleto de lotería!</p>
+        </div>
+        <label style="display:flex;align-items:center;gap:0.4rem;margin:0.6rem 0;cursor:pointer;">
+            <input type="checkbox" id="seed-confirm" onchange="toggleCreateButton()">
+            <span class="text-small">✅ Guardé mi frase en un lugar seguro</span>
+        </label>
+        <button class="btn btn-primary" id="create-account-btn" disabled onclick="createAccount()">🚀 Crear y Entrar</button>
+        <button class="btn btn-outline" onclick="navigateTo('welcome')" style="margin-top:0.6rem;">← Volver</button>
+    </div>
+
+    <div id="screen-import" class="screen">
+        <h2 class="section-title"><i class="fas fa-key"></i> Importar frase semilla</h2>
+        <textarea id="import-seed" rows="3" placeholder="12 palabras separadas por espacios..."></textarea>
+        <div class="text-muted text-center" id="import-error" style="color:#ff6b6b;"></div>
+        <button class="btn btn-primary" onclick="importAccount()" style="margin-top:0.5rem;"><i class="fas fa-unlock-alt"></i> Desbloquear</button>
+        <button class="btn btn-outline" onclick="navigateTo('welcome')" style="margin-top:0.6rem;">← Volver</button>
+    </div>
+
+    <div id="screen-wallet" class="screen">
+        <div class="glass-card gold-gradient-bg text-center">
+            <div class="text-small" style="letter-spacing:1.5px;opacity:0.8;">SALDO DISPONIBLE</div>
+            <div class="balance-number" id="wallet-balance">0</div>
+            <div class="text-small" style="opacity:0.8;">DRC</div>
+        </div>
+        <div class="grid-2">
+            <button class="btn btn-primary" onclick="sendTransaction()"><i class="fas fa-paper-plane"></i> Enviar</button>
+            <button class="btn btn-secondary" onclick="copyAddress()"><i class="fas fa-copy"></i> Recibir</button>
+        </div>
+        <div class="address-display" id="wallet-address">Cargando dirección...</div>
+        <div id="anuncios-container" class="glass-card" style="margin-top:0.8rem;">
+            <p class="text-small"><i class="fas fa-bullhorn"></i> <strong>Anuncios</strong></p>
+            <div id="anuncios-lista"><p class="text-muted text-center">Cargando...</p></div>
+        </div>
+        <div id="admin-anuncio-panel" class="glass-card" style="display:none;margin-top:0.8rem;">
+            <p class="text-small"><i class="fas fa-bullhorn"></i> <strong>Publicar anuncio</strong> <span class="admin-badge">ADMIN</span></p>
+            <textarea id="admin-anuncio-texto" rows="2" placeholder="Escribe un anuncio..." style="margin-bottom:0.3rem;"></textarea>
+            <button class="btn btn-primary" onclick="publicarAnuncio()" style="font-size:0.7rem;padding:0.5rem;">📢 Publicar</button>
+            <div id="admin-anuncio-status" class="text-muted" style="margin-top:0.2rem;"></div>
+        </div>
+        <div class="status-badge" style="justify-content:center;margin-top:0.8rem;">
+            <span class="led" id="wallet-led"></span>
+            <span id="wallet-status">Conectando...</span>
+        </div>
+    </div>
+
+    <div id="screen-miner" class="screen">
+        <div class="glass-card text-center">
+            <i class="fas fa-hard-hat" style="font-size:2.5rem;color:var(--gold);"></i>
+            <h2 style="margin:0.4rem 0;">Minero PoUC</h2>
+            <p class="text-muted">Recompensa: <strong style="color:var(--gold);">100 DRC</strong> / bloque</p>
+            <div class="progress-bar"><div class="progress-fill" id="miner-progress"></div></div>
+            <button class="btn btn-primary" id="mine-btn" onclick="startMining()"><i class="fas fa-gem"></i> Minar ahora</button>
+            <div id="mine-message" class="text-muted" style="margin-top:0.6rem;"></div>
+        </div>
+        <div class="glass-card text-center">
+            <div class="text-muted">Última recompensa</div>
+            <div id="last-reward" style="font-size:1.5rem;font-weight:800;color:var(--gold);">---</div>
+        </div>
+    </div>
+
+    <div id="screen-explorer" class="screen">
+        <div class="glass-card text-center">
+            <div class="text-muted"><i class="fas fa-chart-simple"></i> ALTURA DE RED</div>
+            <div class="balance-number" id="explorer-height" style="font-size:2.2rem;">0</div>
+        </div>
+        <div class="glass-card text-center">
+            <div class="text-muted"><i class="fas fa-gas-pump"></i> GAS ACTUAL</div>
+            <div id="explorer-gas" style="font-size:1.3rem;font-weight:700;">0</div>
+            <div class="text-muted">DRC</div>
+        </div>
+        <div class="glass-card text-center">
+            <div class="text-muted"><i class="fas fa-network-wired"></i> NODOS ACTIVOS</div>
+            <div id="explorer-nodes" style="font-size:1.8rem;font-weight:800;">1</div>
+        </div>
+        <button class="btn btn-outline" onclick="navigateTo('landing')">← Volver</button>
+    </div>
+
+    <div id="screen-ai" class="screen">
+        <div class="glass-card text-center">
+            <i class="fas fa-microchip" style="font-size:3rem;color:var(--gold);"></i>
+            <h2>IA Control</h2>
+            <p class="text-muted">Gas dinámico · Anti-spam · Protección</p>
+            <hr>
+            <div class="status-badge" style="justify-content:center;">
+                <span class="led on"></span><span>Modo seguro activado</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-network" class="screen">
+        <div class="glass-card text-center">
+            <i class="fas fa-globe" style="font-size:3rem;color:var(--gold);"></i>
+            <h2>Red P2P</h2>
+            <div class="address-display">📡 Nodo: 159.54.147.180:8339</div>
+            <p class="text-muted">🔒 Conexión cifrada · PoUC Consensus</p>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-nav" id="bottom-nav" style="display:none;">
+    <button class="nav-btn" data-nav="wallet"><i class="fas fa-wallet"></i><span>Wallet</span></button>
+    <button class="nav-btn" data-nav="miner"><i class="fas fa-gem"></i><span>Minero</span></button>
+    <button class="nav-btn" data-nav="market"><i class="fas fa-store"></i><span>Market</span></button>
+    <button class="nav-btn" data-nav="explorer"><i class="fas fa-chart-line"></i><span>Explorar</span></button>
+    <button class="nav-btn" data-nav="ai"><i class="fas fa-robot"></i><span>IA</span></button>
+    <button class="nav-btn" data-nav="network"><i class="fas fa-globe"></i><span>Red</span></button>
+    <button class="nav-btn" data-nav="plays"><i class="fas fa-ticket-alt"></i><span>Plays</span></button>
+    <button class="nav-btn" data-nav="p2p"><i class="fas fa-exchange-alt"></i><span>P2P</span></button>
+    <button class="nav-btn" data-nav="api"><i class="fas fa-code"></i><span>API</span></button>
+    <button class="nav-btn" data-nav="whitepaper"><i class="fas fa-file-alt"></i><span>Paper</span></button>
+</div>
+
+<script>
+    const API_BASE = "/api/v1";
+    const WORDS = ["abismo","alba","altar","ancla","arbol","arco","arena","asilo","aurora","avion","bajel","barco","base","beso","borde","bosque","brazo","brillo","brisa","broca","casa","crema","luna","sol","mar","tierra","viento","fuego","agua","piedra","oro","plata","cobre","madera","flor","fruto","raiz","hoja","cielo","estrella","nube","rayo","trueno","montaña","rio","lago","oceano","isla","valle","colina"];
+    let currentAddress = "";
+
+    async function apiCall(endpoint, options = {}) {
+        const r = await fetch(`${API_BASE}${endpoint}`, options);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return await r.json();
+    }
+
+    function generateSeedPhrase() { const s = []; for (let i=0;i<12;i++) s.push(WORDS[Math.floor(Math.random()*WORDS.length)]); return s.join(" "); }
+    function seedToAddress(seed) { return `drc_${seed.replace(/\s/g,"").substring(0,28).toLowerCase()}`; }
+    function saveSession(seed, address) { localStorage.setItem("direccoin_seed", seed); localStorage.setItem("direccoin_address", address); currentAddress = address; }
+    function loadSession() { const seed = localStorage.getItem("direccoin_seed"); if (seed) { currentAddress = localStorage.getItem("direccoin_address") || seedToAddress(seed); return { seed, address: currentAddress }; } return null; }
+
+    async function checkConnection() {
+        try {
+            const data = await apiCall("/estado");
+            document.getElementById("landing-status").innerHTML = `✅ Conectado | Bloque #${(data.altura||0).toLocaleString()}`;
+            document.getElementById("landing-led").className = "led on";
+            document.getElementById("wallet-status").innerHTML = "✅ Conectado";
+            document.getElementById("wallet-led").className = "led on";
+            return true;
+        } catch(e) { document.getElementById("landing-status").innerHTML = "⚠️ Sin conexión"; document.getElementById("landing-led").className = "led"; return false; }
+    }
+
+    async function loadBalance() {
+        if (!currentAddress) return 0;
+        try { const data = await apiCall(`/saldo/${encodeURIComponent(currentAddress)}`); document.getElementById("wallet-balance").innerHTML = (data.saldo||0).toLocaleString(); return data.saldo||0; }
+        catch(e) { return 0; }
+    }
+
+    async function loadExplorerData() {
+        try { const data = await apiCall("/estado"); document.getElementById("explorer-height").innerHTML = (data.altura||0).toLocaleString(); document.getElementById("explorer-gas").innerHTML = (data.gas_actual_drc||0.000001).toFixed(8); document.getElementById("explorer-nodes").innerHTML = data.nodos_activos||1; }
+        catch(e) {}
+    }
+
+    async function mineBlock() {
+        if (!currentAddress) { document.getElementById("mine-message").innerHTML = "❌ Crea o importa una cuenta primero"; return false; }
+        const btn = document.getElementById("mine-btn"), msg = document.getElementById("mine-message"), prog = document.getElementById("miner-progress");
+        btn.disabled = true; msg.innerHTML = "⛏️ Minando..."; prog.style.width = "50%";
+        try {
+            const data = await apiCall("/minar", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({minero:currentAddress}) });
+            if (data.exito) { msg.innerHTML = `✅ +${data.recompensa} DRC | Bloque #${data.altura}`; prog.style.width = "100%"; document.getElementById("last-reward").innerHTML = `+${data.recompensa} DRC`; await loadBalance(); await loadExplorerData(); return true; }
+            else { msg.innerHTML = `❌ ${data.error||"Intenta de nuevo."}`; prog.style.width = "0%"; return false; }
+        } catch(e) { msg.innerHTML = "❌ Error de conexión"; prog.style.width = "0%"; return false; }
+        finally { btn.disabled = false; setTimeout(() => { if(msg.innerHTML.includes("✅")) msg.innerHTML=""; prog.style.width="0%"; }, 3000); }
+    }
+    function startMining() { if (!currentAddress) { alert("❌ Primero crea o importa una cuenta"); return; } mineBlock(); }
+
+    async function sendTransaction() {
+        if (!currentAddress) { alert("❌ Crea una wallet"); return; }
+        const dest = prompt("Dirección destino:"); if (!dest || !dest.startsWith("drc_")) { alert("Dirección inválida"); return; }
+        const amt = parseFloat(prompt("Cantidad de DRC:")); if (isNaN(amt) || amt <= 0) { alert("Cantidad inválida"); return; }
+        try { const data = await apiCall("/enviar", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({origen:currentAddress, destino:dest, cantidad:amt}) }); if (data.exito) { alert(`✅ ${amt} DRC enviados`); await loadBalance(); } else alert(`❌ ${data.error}`); }
+        catch(e) { alert("❌ Error de conexión"); }
+    }
+    function copyAddress() { if (!currentAddress) { alert("❌ Crea una wallet"); return; } navigator.clipboard.writeText(currentAddress); alert("📥 Dirección copiada"); }
+    function toggleCreateButton() { document.getElementById("create-account-btn").disabled = !document.getElementById("seed-confirm").checked; }
+
+    function createAccount() {
+        const seed = document.getElementById("seed-phrase-display").innerText;
+        const addr = seedToAddress(seed); saveSession(seed, addr);
+        document.getElementById("wallet-address").innerHTML = currentAddress;
+        const ref = document.getElementById("codigo-referido-input").value.trim();
+        if (ref && ref.startsWith("drc_") && ref !== currentAddress) { fetch("https://direccoin.org/loteria/referido", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ referidor: ref, nuevo: currentAddress }) }).catch(() => {}); }
+        navigateTo("wallet"); loadBalance(); checkConnection();
+    }
+    function importAccount() {
+        const seed = document.getElementById("import-seed").value.trim();
+        if (seed.split(/\s+/).length !== 12) { document.getElementById("import-error").innerHTML = "❌ Deben ser 12 palabras"; return; }
+        saveSession(seed, seedToAddress(seed)); document.getElementById("wallet-address").innerHTML = currentAddress;
+        navigateTo("wallet"); loadBalance(); checkConnection();
+    }
+
+    async function cargarAnuncios() {
+        try {
+            const res = await fetch("https://direccoin.org/anuncios"); const anuncios = await res.json();
+            const div = document.getElementById("anuncios-lista");
+            if (!anuncios || !anuncios.length) { div.innerHTML = "<p class='text-muted text-center'>📢 Sin anuncios</p>"; return; }
+            div.innerHTML = anuncios.map(a => `<div style="background:rgba(232,184,48,0.06);padding:0.5rem;border-radius:8px;margin-bottom:0.3rem;font-size:0.7rem;">${a.texto.replace(/\\n/g,"<br>")}<br><small style="color:#8B8FA8;">${new Date(a.fecha).toLocaleDateString()}</small></div>`).join("");
+        } catch(e) {}
+    }
+    function mostrarPanelAdmin() { if (currentAddress === "drc_enviopactocunaaurorabaseritm") { document.getElementById("admin-anuncio-panel").style.display = "block"; } }
+    async function publicarAnuncio() {
+        const texto = document.getElementById("admin-anuncio-texto").value.trim();
+        const status = document.getElementById("admin-anuncio-status");
+        if (!texto) { status.innerHTML = "❌ Escribe algo"; return; }
+        try {
+            const res = await fetch("https://direccoin.org/anuncios", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ admin: "drc_enviopactocunaaurorabaseritm", texto }) });
+            if (res.ok) { status.innerHTML = "✅ Publicado"; document.getElementById("admin-anuncio-texto").value = ""; cargarAnuncios(); setTimeout(() => status.innerHTML = "", 3000); }
+            else { status.innerHTML = "❌ Error"; }
+        } catch(e) { status.innerHTML = "❌ Error"; }
+    }
+
+    function navigateTo(screen) {
+        ["landing","welcome","create","import","wallet","miner","explorer","ai","network"].forEach(s => { const el = document.getElementById(`screen-${s}`); if (el) el.classList.remove("active"); });
+        if (screen === "market") { window.location.href = "market_final.html"; return; }
+        if (screen === "plays") { window.location.href = "plays.html"; return; }
+        if (screen === "p2p") { window.location.href = "p2p.html"; return; }
+        if (screen === "api") { window.open("http://direccoin.org:8340/api/public/docs","_blank"); return; }
+        if (screen === "whitepaper") { window.location.href = "whitepaper.html"; return; }
+        const target = document.getElementById(`screen-${screen}`);
+        if (target) target.classList.add("active");
+        const nav = document.getElementById("bottom-nav");
+        const main = ["wallet","miner","explorer","ai","network"];
+        nav.style.display = "none";
+        if (main.includes(screen)) { document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.getAttribute("data-nav") === screen)); }
+        if (screen === "wallet") { loadBalance(); checkConnection(); cargarAnuncios(); mostrarPanelAdmin(); }
+        if (screen === "explorer") loadExplorerData();
+        if (screen === "create") { document.getElementById("seed-phrase-display").innerHTML = generateSeedPhrase(); document.getElementById("seed-confirm").checked = false; document.getElementById("create-account-btn").disabled = true; }
+        if (screen === "import") { document.getElementById("import-seed").value = ""; document.getElementById("import-error").innerHTML = ""; }
+        window.scrollTo(0, 0);
+    }
+
+    async function init() {
+        const session = loadSession();
+        if (session) { document.getElementById("wallet-address").innerHTML = session.address; await loadBalance(); navigateTo("wallet"); cargarAnuncios(); mostrarPanelAdmin(); }
+        else navigateTo("landing");
+        await checkConnection(); await loadExplorerData();
+        document.querySelectorAll(".nav-btn").forEach(b => b.addEventListener("click", () => { const n = b.getAttribute("data-nav"); if (n) navigateTo(n); }));
+    }
+    init();
+</script>
+</body>
+</html>
+<style>
+.hamburger-btn {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: linear-gradient(135deg, #E8B830, #FF6B4A);
+    border: none; cursor: pointer; z-index: 200;
+    box-shadow: 0 4px 20px rgba(232,184,48,0.5);
+    font-size: 1.5rem; color: #fff;
+}
+.hamburger-menu {
+    position: fixed; bottom: 80px; right: 20px;
+    background: rgba(14, 16, 26, 0.98); backdrop-filter: blur(30px);
+    border-radius: 20px; padding: 0.8rem; z-index: 199;
+    display: none; flex-direction: column; gap: 0.3rem;
+    border: 1px solid rgba(232,184,48,0.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6); min-width: 160px;
+}
+.hamburger-menu.show { display: flex; }
+.hamburger-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.7rem 1rem; border-radius: 14px; color: #8B8FA8;
+    font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    border: none; background: none; width: 100%; text-align: left;
+}
+.hamburger-item i { width: 20px; color: var(--gold); }
+</style>
+<button class="hamburger-btn" onclick="document.getElementById('menuPopup').classList.toggle('show')">☰</button>
+<div class="hamburger-menu" id="menuPopup">
+    <button class="hamburger-item" onclick="navigateTo('wallet')"><i class="fas fa-wallet"></i> Wallet</button>
+    <button class="hamburger-item" onclick="navigateTo('miner')"><i class="fas fa-gem"></i> Minero</button>
+    <button class="hamburger-item" onclick="navigateTo('market')"><i class="fas fa-store"></i> Market</button>
+    <button class="hamburger-item" onclick="navigateTo('explorer')"><i class="fas fa-chart-line"></i> Explorar</button>
+    <button class="hamburger-item" onclick="navigateTo('plays')"><i class="fas fa-ticket-alt"></i> Plays</button>
+    <button class="hamburger-item" onclick="navigateTo('swap')"><i class="fas fa-exchange-alt"></i> Swap</button>
+    <button class="hamburger-item" onclick="navigateTo('api')"><i class="fas fa-code"></i> API</button>
+    <button class="hamburger-item" onclick="navigateTo('whitepaper')"><i class="fas fa-file-alt"></i> Whitepaper</button>
+</div>
+<style>
+.ada-btn {
+    position: fixed; bottom: 80px; right: 20px;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: linear-gradient(135deg, #4ADE80, #22C55E);
+    border: none; cursor: pointer; z-index: 200;
+    box-shadow: 0 4px 20px rgba(74,222,128,0.5);
+    font-size: 1.3rem; color: #000; font-weight: 900;
+    animation: adaPulse 2s ease-in-out infinite;
+}
+@keyframes adaPulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(74,222,128,0.5); }
+    50% { box-shadow: 0 4px 35px rgba(74,222,128,0.8); }
+}
+.ada-chat {
+    position: fixed; bottom: 140px; right: 20px;
+    width: 300px; max-height: 400px;
+    background: rgba(14, 16, 26, 0.98); backdrop-filter: blur(30px);
+    border-radius: 20px; z-index: 199;
+    display: none; flex-direction: column;
+    border: 1px solid rgba(74,222,128,0.3);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    overflow: hidden;
+}
+.ada-chat.show { display: flex; }
+.ada-chat-header {
+    padding: 0.8rem 1rem; background: rgba(74,222,128,0.1);
+    font-weight: 700; font-size: 0.85rem; color: #4ADE80;
+    display: flex; align-items: center; gap: 0.5rem;
+}
+.ada-chat-body {
+    flex: 1; padding: 0.8rem; overflow-y: auto;
+    max-height: 250px; font-size: 0.75rem; color: #C5C8D4;
+    display: flex; flex-direction: column; gap: 0.5rem;
+}
+.ada-msg { background: rgba(255,255,255,0.04); padding: 0.6rem; border-radius: 12px; }
+.ada-msg.user { background: rgba(232,184,48,0.1); text-align: right; }
+.ada-chat-input {
+    display: flex; padding: 0.5rem; gap: 0.4rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+.ada-chat-input input {
+    flex: 1; padding: 0.5rem 0.8rem;
+    background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; color: #fff; font-size: 0.75rem;
+}
+.ada-chat-input button {
+    padding: 0.5rem 1rem; border-radius: 20px;
+    background: #4ADE80; color: #000; border: none;
+    font-weight: 700; font-size: 0.7rem; cursor: pointer;
+}
+</style>
+<button class="ada-btn" onclick="document.getElementById('adaChat').classList.toggle('show')" title="Hablar con ADA">🧠</button>
+<div class="ada-chat" id="adaChat">
+    <div class="ada-chat-header">🧠 ADA · IA de DirecCoin</div>
+    <div class="ada-chat-body" id="adaBody">
+        <div class="ada-msg">👋 ¡Hola! Soy ADA. Pregúntame sobre la red, minería, lotería o precios.</div>
+    </div>
+    <div class="ada-chat-input">
+        <input type="text" id="adaInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter')hablarConADA()">
+        <button onclick="hablarConADA()">Enviar</button>
+    </div>
+</div>
+<script>
+async function hablarConADA() {
+    const input = document.getElementById('adaInput');
+    const body = document.getElementById('adaBody');
+    const mensaje = input.value.trim();
+    if (!mensaje) return;
+    body.innerHTML += `<div class="ada-msg user">${mensaje}</div>`;
+    input.value = '';
+    body.innerHTML += '<div class="ada-msg">🧠 Pensando...</div>';
+    body.scrollTop = body.scrollHeight;
+    try {
+        const r = await fetch('/api/v1/ada/chat', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({mensaje})
+        });
+        const d = await r.json();
+        body.removeChild(body.lastChild);
+        body.innerHTML += `<div class="ada-msg">${d.respuesta}</div>`;
+    } catch(e) {
+        body.removeChild(body.lastChild);
+        body.innerHTML += '<div class="ada-msg">❌ Error de conexión</div>';
+    }
+    body.scrollTop = body.scrollHeight;
+}
+</script>

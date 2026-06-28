@@ -1,0 +1,161 @@
+{
+  "ofertas": [
+    {
+      "id": 1780555102001,
+      "vendedor": "drc_cielorayofrutobaseestrellapl",
+      "cantidadDRC": 10000,
+      "precioFiat": 1,
+      "monedaFiat": "USD",
+      "metodoPago": "Transferencia",
+      "contacto": "trabcorreo9@gmail.com",
+      "estado": "en_proceso",
+      "fecha": "2026-06-04T06:38:22.001Z",
+      "comprador": "",
+      "fechaCompra": "2026-06-04T06:57:51.422Z"
+    },
+    {
+      "id": 1780555175322,
+      "vendedor": "drc_test",
+      "cantidadDRC": 1000,
+      "precioFiat": 5,
+      "monedaFiat": "USD",
+      "metodoPago": "PayPal",
+      "contacto": "@test",
+      "estado": "en_proceso",
+      "fecha": "2026-06-04T06:39:35.322Z",
+      "comprador": "",
+      "fechaCompra": "2026-06-04T06:57:57.128Z"
+    },
+    {
+      "id": 1780555285509,
+      "vendedor": "drc_cielorayofrutobaseestrellapl",
+      "cantidadDRC": 1000,
+      "precioFiat": 0.5,
+      "monedaFiat": "USD",
+      "metodoPago": "Transferencia",
+      "contacto": "trabcorreo9@gmail.com",
+      "estado": "en_proceso",
+      "fecha": "2026-06-04T06:41:25.509Z",
+      "comprador": "",
+      "fechaCompra": "2026-06-04T06:57:59.008Z"
+    },
+    {
+      "id": 1780555369041,
+      "vendedor": "drc_cielorayofrutobaseestrellapl",
+      "cantidadDRC": 1000,
+      "precioFiat": 0.5,
+      "monedaFiat": "USD",
+      "metodoPago": "Transferencia",
+      "contacto": "trabcorreo9@gmail.com",
+      "estado": "en_proceso",
+      "fecha": "2026-06-04T06:42:49.041Z",
+      "comprador": "",
+      "fechaCompra": "2026-06-04T06:58:00.851Z"
+    },
+    {
+      "id": 1780555490055,
+      "vendedor": "drc_cielorayofrutobaseestrellapl",
+      "cantidadDRC": 1000,
+      "precioFiat": 1,
+      "monedaFiat": "USD",
+      "metodoPago": "Transferencia",
+      "contacto": "trabcorreo9@gmail.com",
+      "estado": "en_proceso",
+      "fecha": "2026-06-04T06:44:50.055Z",
+      "comprador": "",
+      "fechaCompra": "2026-06-04T06:58:02.566Z"
+    },
+    {
+      "id": 1780555903934,
+      "vendedor": "drc_test",
+      "cantidadDRC": 100,
+      "precioFiat": 1,
+      "monedaFiat": "USD",
+      "metodoPago": "Test",
+      "contacto": "@test",
+      "estado": "en_proceso",
+      "fecha": "2026-06-04T06:51:43.934Z",
+      "comprador": "",
+      "fechaCompra": "2026-06-04T06:58:04.423Z"
+    },
+    {
+      "id": 1780555997536,
+      "vendedor": "drc_enviopactocunaaurorabaseritm",
+      "cantidadDRC": 1000,
+      "precioFiat": 1,
+      "monedaFiat": "USD",
+      "metodoPago": "Transferencia",
+      "contacto": "leodanitrab1@gmail.com",
+      "estado": "disputa",
+      "fecha": "2026-06-04T06:53:17.536Z",
+      "comprador": "",
+      "fechaCompra": "2026-06-04T06:58:06.450Z"
+    },
+    {
+      "id": 1780556392767,
+      "vendedor": "drc_abismohieloavionarcopiedrabo",
+      "cantidadDRC": 1000,
+      "precioFiat": 1,
+      "monedaFiat": "USD",
+      "metodoPago": "Paypal",
+      "contacto": "trabcorreo9@gmail.com",
+      "estado": "completada",
+      "fecha": "2026-06-04T06:59:52.767Z",
+      "comprador": "drc_enviopactocunaaurorabaseritm",
+      "fechaCompra": "2026-06-04T07:13:50.703Z",
+      "fechaCompletada": "2026-06-04T07:14:31.455Z"
+    },
+    {
+      "id": 1780556499283,
+      "vendedor": "drc_enviopactocunaaurorabaseritm",
+      "cantidadDRC": 10000,
+      "precioFiat": 10,
+      "monedaFiat": "USD",
+      "metodoPago": "Transferencia",
+      "contacto": "direccoin2026@gmail.com",
+      "estado": "activa",
+      "fecha": "2026-06-04T07:01:39.283Z"
+    },
+    {
+      "id": 1780557298674,
+      "vendedor": "drc_abismohieloavionarcopiedrabo",
+      "cantidadDRC": 1000,
+      "precioFiat": 1,
+      "monedaFiat": "USD",
+      "metodoPago": "Paypal",
+      "contacto": "",
+      "estado": "activa",
+      "fecha": "2026-06-04T07:14:58.674Z"
+    },
+    {
+      "id": 1780557315071,
+      "vendedor": "drc_abismohieloavionarcopiedrabo",
+      "cantidadDRC": 1000,
+      "precioFiat": 1,
+      "monedaFiat": "USD",
+      "metodoPago": "Paypal",
+      "contacto": "trabcorreo9@gmail.com",
+      "estado": "activa",
+      "fecha": "2026-06-04T07:15:15.071Z"
+    }
+  ],
+  "disputas": [
+    {
+      "ofertaId": 1780555997536,
+      "motivo": "no pago",
+      "reportadoPor": "drc_enviopactocunaaurorabaseritm",
+      "fecha": "2026-06-04T07:07:14.847Z",
+      "resuelta": false
+    }
+  ],
+  "reputacion": {
+    "drc_abismohieloavionarcopiedrabo": {
+      "ventas": 1,
+      "disputas": 0
+    },
+    "drc_enviopactocunaaurorabaseritm": {
+      "compras": 1,
+      "disputas": 0
+    }
+  }
+}
