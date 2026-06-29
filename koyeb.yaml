@@ -1,0 +1,10 @@
+name: direccoin
+service:
+  ports:
+    - port: 8339
+      protocol: http
+  routes:
+    - path: /
+      port: 8339
+  run:
+    command: python3 api_corregida.py

@@ -496,6 +496,7 @@
         if (screen === "p2p") { window.location.href = "p2p.html"; return; }
         if (screen === "api") { window.open("http://direccoin.org:8340/api/public/docs","_blank"); return; }
         if (screen === "whitepaper") { window.location.href = "whitepaper.html"; return; }
+        if (screen === "swap") { window.location.href = "swap.html"; return; }
         const target = document.getElementById(`screen-${screen}`);
         if (target) target.classList.add("active");
         const nav = document.getElementById("bottom-nav");
@@ -556,6 +557,7 @@
     <button class="hamburger-item" onclick="navigateTo('swap')"><i class="fas fa-exchange-alt"></i> Swap</button>
     <button class="hamburger-item" onclick="navigateTo('api')"><i class="fas fa-code"></i> API</button>
     <button class="hamburger-item" onclick="navigateTo('whitepaper')"><i class="fas fa-file-alt"></i> Whitepaper</button>
+    <button class="hamburger-item" onclick="window.location.href='activar-nodo.html'"><i class="fas fa-globe-americas"></i> Activar Nodo</button>
 </div>
 <style>
 .ada-btn {
